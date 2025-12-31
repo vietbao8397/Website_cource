@@ -1,0 +1,341 @@
+.detailPage {
+    max-width: 1200px;
+}
+
+.header {
+    margin-bottom: var(--spacing-xl);
+}
+
+.backLink {
+    display: inline-block;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    text-decoration: none;
+    margin-bottom: var(--spacing-md);
+}
+
+.backLink:hover {
+    color: var(--color-accent-gold);
+}
+
+.customerHeader {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+}
+
+.avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: var(--radius-full);
+    background: linear-gradient(135deg, var(--color-accent-gold), var(--color-accent-gold-dark));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-bg-canvas);
+}
+
+.customerMeta h1 {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--spacing-xs);
+}
+
+.customerMeta p {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+/* Content Layout */
+.content {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: var(--spacing-xl);
+}
+
+.infoColumn,
+.timelineColumn {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+/* Card */
+.card {
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+}
+
+.card h3 {
+    font-size: var(--font-size-base);
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--color-border);
+}
+
+/* Form */
+.formGroup {
+    margin-bottom: var(--spacing-md);
+}
+
+.formGroup label {
+    display: block;
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-xs);
+}
+
+.formGroup input,
+.formGroup select,
+.formGroup textarea {
+    width: 100%;
+    padding: var(--spacing-sm);
+    background: var(--color-bg-canvas);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-primary);
+}
+
+.formGroup input:focus,
+.formGroup select:focus,
+.formGroup textarea:focus {
+    outline: none;
+    border-color: var(--color-accent-gold);
+}
+
+.formGroup input:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+}
+
+.tag {
+    padding: 2px 8px;
+    background: var(--color-bg-canvas);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-xs);
+}
+
+.noTags {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+}
+
+.saveBtn {
+    width: 100%;
+    padding: var(--spacing-sm);
+    background: var(--color-accent-gold);
+    border: none;
+    border-radius: var(--radius-md);
+    color: var(--color-bg-canvas);
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.saveBtn:hover:not(:disabled) {
+    filter: brightness(1.1);
+}
+
+.saveBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Orders */
+.orderList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.orderItem {
+    padding: var(--spacing-sm);
+    background: var(--color-bg-canvas);
+    border-radius: var(--radius-md);
+}
+
+.orderInfo {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-xs);
+}
+
+.orderCourse {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+}
+
+.orderAmount {
+    font-size: var(--font-size-sm);
+    color: var(--color-accent-gold);
+}
+
+.orderMeta {
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+}
+
+.orderStatus {
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+}
+
+.status_paid {
+    background: rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+}
+
+.status_pending {
+    background: rgba(245, 158, 11, 0.2);
+    color: #f59e0b;
+}
+
+/* Timeline */
+.timeline {
+    position: relative;
+    padding-left: var(--spacing-lg);
+}
+
+.timeline::before {
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--color-border);
+}
+
+.timelineItem {
+    position: relative;
+    margin-bottom: var(--spacing-md);
+}
+
+.timelineDot {
+    position: absolute;
+    left: calc(-1 * var(--spacing-lg) + 2px);
+    top: 4px;
+    width: 10px;
+    height: 10px;
+    background: var(--color-accent-gold);
+    border-radius: var(--radius-full);
+}
+
+.timelineContent {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.eventType {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+}
+
+.eventDate {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+}
+
+.eventData {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    background: var(--color-bg-canvas);
+    padding: var(--spacing-xs);
+    border-radius: var(--radius-sm);
+    margin-top: var(--spacing-xs);
+    word-break: break-all;
+}
+
+/* Email List */
+.emailList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.emailItem {
+    padding: var(--spacing-sm);
+    background: var(--color-bg-canvas);
+    border-radius: var(--radius-md);
+}
+
+.emailInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-bottom: var(--spacing-xs);
+}
+
+.emailSubject {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+}
+
+.emailSequence {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+}
+
+.emailMeta {
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--font-size-xs);
+}
+
+.emailStatus {
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+}
+
+.email_pending {
+    background: rgba(245, 158, 11, 0.2);
+    color: #f59e0b;
+}
+
+.email_sent {
+    background: rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+}
+
+.email_failed {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+}
+
+.emailDate {
+    color: var(--color-text-muted);
+}
+
+/* States */
+.loading,
+.error {
+    text-align: center;
+    padding: var(--spacing-2xl);
+    color: var(--color-text-muted);
+}
+
+.emptyText {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .content {
+        grid-template-columns: 1fr;
+    }
+}

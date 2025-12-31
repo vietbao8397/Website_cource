@@ -82,6 +82,23 @@ function CheckoutContent() {
                     fullName: user.user_metadata?.full_name || ""
                 }));
             }
+
+            // Track checkout view event
+            if (data) {
+                fetch("/api/tracking/event", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        email: user?.email || "anonymous",
+                        eventType: "checkout_view",
+                        eventData: {
+                            course_id: data.id,
+                            course_name: data.title,
+                        },
+                        userId: user?.id,
+                    }),
+                }).catch(console.error);
+            }
         }
 
         fetchCourse();
@@ -194,6 +211,25 @@ function CheckoutContent() {
                 paymentMethod: "Chuyển khoản ngân hàng",
             });
         }
+
+        // 2.5. Track purchase event for pipeline
+        fetch("/api/tracking/event", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                email: formData.email,
+                eventType: "purchase",
+                eventData: {
+                    course_id: course.id,
+                    course_name: course.title,
+                    order_id: order.id,
+                    amount: finalPrice,
+                },
+                userId: userId,
+                fullName: formData.fullName,
+                phone: formData.phone,
+            }),
+        }).catch(console.error);
 
         // 3. If free, auto-enroll and send activation email
         if (finalPrice === 0 && userId) {

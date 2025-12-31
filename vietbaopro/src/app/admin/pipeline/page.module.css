@@ -1,0 +1,249 @@
+.pipelinePage {
+    max-width: 1200px;
+}
+
+.header {
+    margin-bottom: var(--spacing-xl);
+}
+
+.header h1 {
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--spacing-xs);
+}
+
+.header p {
+    color: var(--color-text-muted);
+}
+
+/* Stage Filter Cards */
+.stageCards {
+    display: flex;
+    gap: var(--spacing-sm);
+    overflow-x: auto;
+    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-xl);
+}
+
+.stageCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: var(--color-bg-surface);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    min-width: 100px;
+}
+
+.stageCard:hover {
+    border-color: var(--stage-color, var(--color-accent-gold));
+    transform: translateY(-2px);
+}
+
+.stageCard.active {
+    border-color: var(--stage-color, var(--color-accent-gold));
+    background: color-mix(in srgb, var(--stage-color, var(--color-accent-gold)) 10%, transparent);
+}
+
+.stageEmoji {
+    font-size: 1.5rem;
+}
+
+.stageLabel {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-secondary);
+}
+
+.stageCount {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+}
+
+/* Search Bar */
+.searchBar {
+    margin-bottom: var(--spacing-lg);
+}
+
+.searchBar input {
+    width: 100%;
+    max-width: 400px;
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-primary);
+}
+
+.searchBar input:focus {
+    outline: none;
+    border-color: var(--color-accent-gold);
+}
+
+/* Customer List */
+.customerList {
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.listHeader {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1.5fr 1fr 120px;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: var(--color-bg-canvas);
+    border-bottom: 1px solid var(--color-border);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+}
+
+.customerRow {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1.5fr 1fr 120px;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-bottom: 1px solid var(--color-border);
+    align-items: center;
+    transition: background var(--transition-fast);
+}
+
+.customerRow:last-child {
+    border-bottom: none;
+}
+
+.customerRow:hover {
+    background: var(--color-bg-hover);
+}
+
+.customerInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.customerName {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+}
+
+.customerEmail {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+}
+
+.stageBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    color: white;
+}
+
+.customerTags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.tag {
+    padding: 2px 8px;
+    background: var(--color-bg-canvas);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+}
+
+.tagMore {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+}
+
+.customerDate {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+}
+
+.viewBtn {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background: transparent;
+    border: 1px solid var(--color-accent-gold);
+    border-radius: var(--radius-md);
+    color: var(--color-accent-gold);
+    font-size: var(--font-size-xs);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.viewBtn:hover {
+    background: var(--color-accent-gold);
+    color: var(--color-bg-canvas);
+}
+
+/* States */
+.loading {
+    text-align: center;
+    padding: var(--spacing-2xl);
+    color: var(--color-text-muted);
+}
+
+.emptyState {
+    text-align: center;
+    padding: var(--spacing-2xl);
+    background: var(--color-bg-surface);
+    border: 1px dashed var(--color-border);
+    border-radius: var(--radius-lg);
+}
+
+.emptyState p {
+    color: var(--color-text-muted);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .listHeader {
+        display: none;
+    }
+
+    .customerRow {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-sm);
+    }
+
+    .customerStage,
+    .customerTags,
+    .customerDate {
+        justify-self: start;
+    }
+
+    .customerActions {
+        justify-self: stretch;
+    }
+
+    .viewBtn {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .stageCards {
+        flex-wrap: wrap;
+    }
+
+    .stageCard {
+        flex: 1 1 calc(33% - var(--spacing-sm));
+        min-width: 80px;
+    }
+}
