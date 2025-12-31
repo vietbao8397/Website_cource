@@ -74,17 +74,15 @@ export default async function ResourcesPage() {
                                             </div>
 
                                             {canAccess ? (
-                                                <a
-                                                    href={resource.resource_url || "#"}
+                                                <Link
+                                                    href={`/resource/${resource.slug}`}
                                                     className={styles.downloadBtn}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
                                                 >
-                                                    Truy cập ngay →
-                                                </a>
+                                                    Xem chi tiết →
+                                                </Link>
                                             ) : (
-                                                <Link href={`/checkout?courseId=${resource.id}`} className={styles.buyBtn}>
-                                                    Mua để truy cập
+                                                <Link href={`/resource/${resource.slug}`} className={styles.buyBtn}>
+                                                    Xem chi tiết & Mua
                                                 </Link>
                                             )}
                                         </div>

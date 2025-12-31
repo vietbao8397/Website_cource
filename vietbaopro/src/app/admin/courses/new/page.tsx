@@ -50,12 +50,15 @@ export default function NewCoursePage() {
 
         const supabase = createClient();
 
+        const { data: { user } } = await supabase.auth.getUser();
+
         const { error: insertError } = await supabase.from("courses").insert({
             title: formData.title,
             slug: formData.slug,
             short_description: formData.short_description,
             description: formData.description,
             price: Number(formData.price),
+            instructor_id: user?.id,
             sale_price: formData.sale_price ? Number(formData.sale_price) : null,
             youtube_preview_id: formData.youtube_preview_id || null,
             status: formData.status,
