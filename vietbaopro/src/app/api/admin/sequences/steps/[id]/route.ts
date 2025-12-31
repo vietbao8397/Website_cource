@@ -28,7 +28,7 @@ export async function PATCH(
         }
 
         // Update allowed fields
-        const allowedFields = ["subject", "content", "delay_hours", "is_active"];
+        const allowedFields = ["subject", "content", "delay_hours", "send_at_hour", "send_at_minute", "is_active"];
         const updateData: Record<string, unknown> = {};
 
         for (const field of allowedFields) {

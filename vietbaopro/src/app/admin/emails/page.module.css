@@ -280,6 +280,33 @@
     margin-top: var(--spacing-xs);
 }
 
+.delayInputGroup {
+    display: flex;
+    gap: var(--spacing-md);
+}
+
+.delayInput {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.delayInput input {
+    width: 70px;
+    text-align: center;
+}
+
+.delayInput span {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+}
+
+.delayLabel {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+    padding: 0 var(--spacing-xs);
+}
+
 .previewSection {
     margin-top: var(--spacing-lg);
 }

@@ -8,6 +8,8 @@ interface EmailStep {
     id: string;
     step_order: number;
     delay_hours: number;
+    send_at_hour: number;
+    send_at_minute: number;
     subject: string;
     content: string;
     is_active: boolean;
@@ -32,7 +34,7 @@ export default function EmailSequencesPage() {
     const [sequences, setSequences] = useState<EmailSequence[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [editingStep, setEditingStep] = useState<EmailStep | null>(null);
-    const [editForm, setEditForm] = useState({ subject: "", content: "" });
+    const [editForm, setEditForm] = useState({ subject: "", content: "", delay_days: 0, send_at_hour: 9, send_at_minute: 0 });
     const [isSaving, setIsSaving] = useState(false);
 
     useEffect(() => {
@@ -58,7 +60,10 @@ export default function EmailSequencesPage() {
         setEditingStep(step);
         setEditForm({
             subject: step.subject,
-            content: step.content,
+            content: step.content || "",
+            delay_days: Math.floor(step.delay_hours / 24),
+            send_at_hour: step.send_at_hour ?? 9,
+            send_at_minute: step.send_at_minute ?? 0,
         });
     };
 
@@ -70,7 +75,13 @@ export default function EmailSequencesPage() {
             const res = await fetch(`/api/admin/sequences/steps/${editingStep.id}`, {
                 method: "PATCH",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(editForm),
+                body: JSON.stringify({
+                    subject: editForm.subject,
+                    content: editForm.content,
+                    delay_hours: editForm.delay_days * 24,
+                    send_at_hour: editForm.send_at_hour,
+                    send_at_minute: editForm.send_at_minute,
+                }),
             });
 
             if (res.ok) {
@@ -97,13 +108,14 @@ export default function EmailSequencesPage() {
         }
     };
 
-    const formatDelayHours = (hours: number) => {
-        if (hours === 0) return "Gửi ngay";
-        if (hours < 24) return `Sau ${hours} giờ`;
-        const days = Math.floor(hours / 24);
-        const remainingHours = hours % 24;
-        if (remainingHours === 0) return `Sau ${days} ngày`;
-        return `Sau ${days} ngày ${remainingHours} giờ`;
+    const formatDelay = (step: EmailStep) => {
+        const days = Math.floor(step.delay_hours / 24);
+        const hour = step.send_at_hour ?? 9;
+        const minute = step.send_at_minute ?? 0;
+        const timeStr = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+
+        if (days === 0) return `Gửi ngay lúc ${timeStr}`;
+        return `Sau ${days} ngày, lúc ${timeStr}`;
     };
 
     if (isLoading) {
@@ -162,7 +174,7 @@ export default function EmailSequencesPage() {
                                             <div className={styles.stepContent}>
                                                 <div className={styles.stepMeta}>
                                                     <span className={styles.stepDelay}>
-                                                        ⏰ {formatDelayHours(step.delay_hours)}
+                                                        ⏰ {formatDelay(step)}
                                                     </span>
                                                     <span className={step.is_active ? styles.stepActive : styles.stepInactive}>
                                                         {step.is_active ? "Bật" : "Tắt"}
@@ -172,7 +184,7 @@ export default function EmailSequencesPage() {
                                                 <div
                                                     className={styles.stepPreview}
                                                     dangerouslySetInnerHTML={{
-                                                        __html: step.content.substring(0, 150) + "...",
+                                                        __html: step.content ? step.content.substring(0, 150) + "..." : "Chưa có nội dung",
                                                     }}
                                                 />
                                                 <button
@@ -216,6 +228,52 @@ export default function EmailSequencesPage() {
                                 />
                                 <p className={styles.hint}>
                                     Biến hỗ trợ: {"{{name}}"}, {"{{course_name}}"}, {"{{resource_name}}"}
+                                </p>
+                            </div>
+                            <div className={styles.formGroup}>
+                                <label>⏰ Thời gian gửi (sau khi trigger)</label>
+                                <div className={styles.delayInputGroup}>
+                                    <div className={styles.delayInput}>
+                                        <input
+                                            type="number"
+                                            min="0"
+                                            value={editForm.delay_days}
+                                            onChange={(e) => {
+                                                const days = parseInt(e.target.value) || 0;
+                                                setEditForm((prev) => ({ ...prev, delay_days: days }));
+                                            }}
+                                        />
+                                        <span>ngày</span>
+                                    </div>
+                                    <span className={styles.delayLabel}>vào lúc</span>
+                                    <div className={styles.delayInput}>
+                                        <input
+                                            type="number"
+                                            min="0"
+                                            max="23"
+                                            value={editForm.send_at_hour}
+                                            onChange={(e) => {
+                                                const hour = parseInt(e.target.value) || 0;
+                                                setEditForm((prev) => ({ ...prev, send_at_hour: Math.min(23, Math.max(0, hour)) }));
+                                            }}
+                                        />
+                                        <span>:</span>
+                                        <input
+                                            type="number"
+                                            min="0"
+                                            max="59"
+                                            value={editForm.send_at_minute}
+                                            onChange={(e) => {
+                                                const minute = parseInt(e.target.value) || 0;
+                                                setEditForm((prev) => ({ ...prev, send_at_minute: Math.min(59, Math.max(0, minute)) }));
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                                <p className={styles.hint}>
+                                    {editForm.delay_days === 0
+                                        ? `Gửi ngay khi trigger xảy ra, vào lúc ${editForm.send_at_hour.toString().padStart(2, '0')}:${editForm.send_at_minute.toString().padStart(2, '0')}`
+                                        : `Gửi sau ${editForm.delay_days} ngày, vào lúc ${editForm.send_at_hour.toString().padStart(2, '0')}:${editForm.send_at_minute.toString().padStart(2, '0')}`}
                                 </p>
                             </div>
                             <div className={styles.formGroup}>

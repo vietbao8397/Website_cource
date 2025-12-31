@@ -30,7 +30,10 @@ export async function GET() {
                     id,
                     step_order,
                     delay_hours,
+                    send_at_hour,
+                    send_at_minute,
                     subject,
+                    content,
                     is_active
                 )
             `)
