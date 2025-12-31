@@ -14,7 +14,7 @@ interface Enrollment {
         id: string;
         title: string;
         slug: string;
-    };
+    }[];
 }
 
 interface Order {
@@ -24,7 +24,7 @@ interface Order {
     created_at: string;
     courses: {
         title: string;
-    };
+    }[];
 }
 
 export default async function UserDetailPage({
@@ -109,7 +109,8 @@ export default async function UserDetailPage({
     function calculateProgress(enrollment: Enrollment): number {
         const lessonCount = lessonCounts[enrollment.course_id] || 0;
         if (lessonCount === 0) return 0;
-        const completedCount = Object.values(enrollment.progress || {}).filter(Boolean).length;
+        const progressObj = (enrollment.progress as Record<string, any>) || {};
+        const completedCount = Object.values(progressObj).filter(Boolean).length;
         return Math.round((completedCount / lessonCount) * 100);
     }
 
@@ -160,7 +161,8 @@ export default async function UserDetailPage({
                 {enrollments && enrollments.length > 0 ? (
                     <div className={styles.enrollmentsList}>
                         {enrollments.map((enrollment) => {
-                            const course = enrollment.courses as Enrollment["courses"];
+                            const course = (enrollment.courses as any)?.[0];
+                            if (!course) return null;
                             const progress = calculateProgress(enrollment);
                             const lessonCount = lessonCounts[enrollment.course_id] || 0;
                             const completedCount = Object.values(enrollment.progress || {}).filter(Boolean).length;
@@ -222,7 +224,7 @@ export default async function UserDetailPage({
                             <tbody>
                                 {orders.map((order) => (
                                     <tr key={order.id}>
-                                        <td>{(order.courses as { title: string })?.title}</td>
+                                        <td>{(order.courses as any)?.[0]?.title || "N/A"}</td>
                                         <td className={styles.amount}>{formatPrice(order.amount)}</td>
                                         <td>
                                             <span className={`${styles.statusBadge} ${styles[`status_${order.status}`]}`}>

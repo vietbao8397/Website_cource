@@ -15,7 +15,7 @@ interface Enrollment {
         slug: string;
         short_description: string;
         thumbnail_url: string | null;
-    };
+    }[];
 }
 
 interface LessonCount {
@@ -57,7 +57,7 @@ export default async function MyLearningPage() {
         .order("created_at", { ascending: false });
 
     // Get lesson counts for each enrolled course
-    const courseIds = enrollments?.map((e) => (e.courses as unknown as Enrollment["courses"]).id) || [];
+    const courseIds = enrollments?.map((e) => (e.courses as any)?.[0]?.id).filter(Boolean) || [];
 
     let lessonCounts: LessonCount[] = [];
     if (courseIds.length > 0) {
@@ -78,8 +78,9 @@ export default async function MyLearningPage() {
     }
 
     // Calculate progress for each enrollment
-    const enrollmentsWithProgress = enrollments?.map((enrollment) => {
-        const course = enrollment.courses as unknown as Enrollment["courses"];
+    const enrollmentsWithProgress = (enrollments?.map((enrollment) => {
+        const course = (enrollment.courses as any)?.[0];
+        if (!course) return null;
         const lessonCount = lessonCounts.find((lc) => lc.course_id === course.id)?.count || 0;
         const completedCount = Object.values(enrollment.progress || {}).filter(Boolean).length;
         const progressPercent = lessonCount > 0 ? Math.round((completedCount / lessonCount) * 100) : 0;
@@ -91,7 +92,7 @@ export default async function MyLearningPage() {
             completedCount,
             progressPercent,
         };
-    });
+    }) || []).filter((e): e is NonNullable<typeof e> => e !== null);
 
     return (
         <>

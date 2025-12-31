@@ -116,7 +116,7 @@ export default async function CourseDetailPage({
         },
     ];
 
-    const instructorName = course.instructor?.full_name || "Việt Bảo";
+    const instructorName = (course.instructor as any)?.[0]?.full_name || "Việt Bảo";
     const instructorTitle = "Chuyên gia Hệ thống hóa Quy trình Sáng tạo Nội dung";
 
     return (
