@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
+import ImageUpload from "@/components/admin/ImageUpload";
 import styles from "./page.module.css";
 
 export default function NewCoursePage() {
@@ -22,6 +23,7 @@ export default function NewCoursePage() {
         status: "draft",
         type: "course",
         resource_url: "",
+        thumbnail_url: "",
     });
 
     const handleChange = (
@@ -64,6 +66,7 @@ export default function NewCoursePage() {
             status: formData.status,
             type: formData.type,
             resource_url: formData.type === "resource" ? formData.resource_url : null,
+            thumbnail_url: formData.thumbnail_url || null,
         });
 
         if (insertError) {
@@ -171,6 +174,14 @@ export default function NewCoursePage() {
                             placeholder="VD: dQw4w9WgXcQ"
                         />
                         <span className={styles.hint}>ID video từ URL YouTube</span>
+                    </div>
+
+                    <div className={styles.formGroup} style={{ gridColumn: "1 / -1" }}>
+                        <ImageUpload
+                            label="Ảnh đại diện (Thumbnail)"
+                            value={formData.thumbnail_url}
+                            onChange={(url) => setFormData(prev => ({ ...prev, thumbnail_url: url }))}
+                        />
                     </div>
 
                     <div className={styles.formGroup}>

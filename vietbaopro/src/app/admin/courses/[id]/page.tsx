@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
+import ImageUpload from "@/components/admin/ImageUpload";
 import styles from "./page.module.css";
 
 interface Course {
@@ -40,6 +41,7 @@ export default function EditCoursePage({
         status: "draft",
         type: "course",
         resource_url: "",
+        thumbnail_url: "",
     });
 
     useEffect(() => {
@@ -71,6 +73,7 @@ export default function EditCoursePage({
                 status: course.status,
                 type: course.type || "course",
                 resource_url: course.resource_url || "",
+                thumbnail_url: course.thumbnail_url || "",
             });
             setIsLoading(false);
         }
@@ -107,6 +110,7 @@ export default function EditCoursePage({
                 status: formData.status,
                 type: formData.type,
                 resource_url: formData.type === "resource" ? formData.resource_url : null,
+                thumbnail_url: formData.thumbnail_url || null,
             })
             .eq("id", courseId);
 
@@ -217,6 +221,14 @@ export default function EditCoursePage({
                             value={formData.youtube_preview_id}
                             onChange={handleChange}
                             placeholder="VD: dQw4w9WgXcQ"
+                        />
+                    </div>
+
+                    <div className={styles.formGroup} style={{ gridColumn: "1 / -1" }}>
+                        <ImageUpload
+                            label="Ảnh đại diện (Thumbnail)"
+                            value={formData.thumbnail_url}
+                            onChange={(url) => setFormData(prev => ({ ...prev, thumbnail_url: url }))}
                         />
                     </div>
 

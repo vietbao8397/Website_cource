@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
+import ImageUpload from "@/components/admin/ImageUpload";
 import styles from "./page.module.css";
 
 interface Category {
@@ -191,22 +192,11 @@ export default function NewBlogPostPage() {
                         </select>
                     </div>
 
-                    <div className={styles.formGroup}>
-                        <label>
-                            Ảnh bìa (URL)
-                            <span className={styles.tooltip}>
-                                ℹ️
-                                <span className={styles.tooltipText}>
-                                    Không bắt buộc. Kích thước: 1200x630px
-                                </span>
-                            </span>
-                        </label>
-                        <input
-                            type="text"
-                            name="cover_image_url"
+                    <div className={styles.formGroup} style={{ gridColumn: "1 / -1" }}>
+                        <ImageUpload
+                            label="Ảnh bìa (Cover Image)"
                             value={formData.cover_image_url}
-                            onChange={handleChange}
-                            placeholder="https://example.com/image.jpg (tùy chọn)"
+                            onChange={(url) => setFormData(prev => ({ ...prev, cover_image_url: url }))}
                         />
                     </div>
 
@@ -235,6 +225,18 @@ export default function NewBlogPostPage() {
                             <span className={styles.toolbarHint}>
                                 💡 Sử dụng HTML để định dạng: &lt;h2&gt;, &lt;p&gt;, &lt;img src="..."&gt;, &lt;ul&gt;&lt;li&gt;...
                             </span>
+                            <div className={styles.inlineUpload}>
+                                <ImageUpload
+                                    label="Tải ảnh lên Drive để lấy link chèn vào bài"
+                                    value=""
+                                    onChange={(url) => {
+                                        if (url) {
+                                            const imgHtml = `\n<img src="${url}" alt="image" />\n`;
+                                            setFormData(prev => ({ ...prev, content: prev.content + imgHtml }));
+                                        }
+                                    }}
+                                />
+                            </div>
                         </div>
                         <textarea
                             name="content"

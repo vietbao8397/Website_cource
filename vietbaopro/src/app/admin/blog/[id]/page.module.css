@@ -140,6 +140,10 @@
     color: var(--color-text-muted);
 }
 
+.inlineUpload {
+    margin-top: var(--spacing-sm);
+}
+
 .codeEditor {
     font-family: 'Consolas', 'Monaco', monospace;
     font-size: var(--font-size-sm);
