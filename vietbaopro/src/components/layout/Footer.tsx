@@ -31,7 +31,7 @@ export default function Footer() {
                                 <Link href="/courses/pro-content-system">Pro Content System</Link>
                             </li>
                             <li>
-                                <Link href="/resources">Tài nguyên miễn phí</Link>
+                                <Link href="/resources">Tất cả tài nguyên</Link>
                             </li>
                         </ul>
                     </div>
