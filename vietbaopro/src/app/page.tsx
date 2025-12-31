@@ -2,8 +2,12 @@ import { Header, Footer } from "@/components/layout";
 import styles from "./page.module.css";
 import Link from "next/link";
 import { Motion, StaggerContainer } from "@/components/ui/Motion";
+import { createClient } from "@/lib/supabase/server";
 
-export default function Home() {
+export default async function Home() {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
   return (
     <>
       <Header />
@@ -269,11 +273,11 @@ export default function Home() {
                 Miễn phí tài nguyên starter kit khi đăng ký hôm nay.
               </p>
               <div className={styles.ctaButtons}>
-                <Link href="/register" className="btn btn-primary btn-lg">
-                  Đăng ký ngay
+                <Link href={user ? "/my-learning" : "/register"} className="btn btn-primary btn-lg">
+                  {user ? "Tiếp tục học" : "Đăng ký ngay"}
                 </Link>
-                <Link href="/courses" className="btn btn-secondary btn-lg">
-                  Xem tất cả khóa học
+                <Link href={user ? "/resources" : "/courses"} className="btn btn-secondary btn-lg">
+                  {user ? "Tài nguyên miễn phí" : "Xem tất cả khóa học"}
                 </Link>
               </div>
             </Motion>

@@ -14,6 +14,8 @@ export default async function CoursesPage() {
     const supabase = await createClient();
 
     // Fetch published courses from Supabase
+    const { data: { user } } = await supabase.auth.getUser();
+
     const { data: courses, error } = await supabase
         .from("courses")
         .select(`
@@ -133,7 +135,7 @@ export default async function CoursesPage() {
                                     Nhận ngay Template Notion Workspace + Checklist Lộ Trình 30
                                     ngày hoàn toàn miễn phí.
                                 </p>
-                                <Link href="/register" className="btn btn-primary">
+                                <Link href={user ? "/resources" : "/register"} className="btn btn-primary">
                                     Nhận tài nguyên miễn phí
                                 </Link>
                             </div>
