@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import { Icons } from "@/components/ui/Icons";
 import styles from "./layout.module.css";
 
 export default async function AdminLayout({
@@ -37,30 +38,32 @@ export default async function AdminLayout({
       <aside className={styles.sidebar}>
         <div className={styles.sidebarHeader}>
           <Link href="/admin" className={styles.logo}>
-            <span className={styles.logoIcon}>⚙️</span>
+            <span className={styles.logoIcon}>
+              <Icons.Settings size={22} variant="gold" />
+            </span>
             <span>Vietbaopro Admin</span>
           </Link>
         </div>
         <nav className={styles.nav}>
           <Link href="/admin" className={styles.navItem}>
-            📊 Tổng quan
+            <Icons.LayoutDashboard size={18} className={styles.navIcon} /> Tổng quan
           </Link>
           <Link href="/admin/orders" className={styles.navItem}>
-            📦 Đơn hàng
+            <Icons.ShoppingBag size={18} className={styles.navIcon} /> Đơn hàng
           </Link>
           <Link href="/admin/courses" className={styles.navItem}>
-            📚 Khóa học & Tài nguyên
+            <Icons.Course size={18} className={styles.navIcon} /> Khóa học & Tài nguyên
           </Link>
           <Link href="/admin/blog" className={styles.navItem}>
-            ✍️ Blog
+            <Icons.Blog size={18} className={styles.navIcon} /> Blog
           </Link>
           <Link href="/admin/users" className={styles.navItem}>
-            👥 Người dùng
+            <Icons.Users size={18} className={styles.navIcon} /> Người dùng
           </Link>
         </nav>
         <div className={styles.sidebarFooter}>
           <Link href="/" className={styles.navItem}>
-            ← Về trang chính
+            <Icons.Home size={18} className={styles.navIcon} /> Về trang chính
           </Link>
         </div>
       </aside>

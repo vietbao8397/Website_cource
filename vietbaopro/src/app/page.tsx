@@ -2,6 +2,7 @@ import { Header, Footer } from "@/components/layout";
 import styles from "./page.module.css";
 import Link from "next/link";
 import { Motion, StaggerContainer } from "@/components/ui/Motion";
+import { Icons } from "@/components/ui/Icons";
 import { createClient } from "@/lib/supabase/server";
 
 export default async function Home() {
@@ -18,7 +19,9 @@ export default async function Home() {
           <div className="container">
             <div className={styles.heroContent}>
               <Motion type="slide-up" delay={0.1}>
-                <span className={styles.heroBadge}>🚀 Dành cho người mới</span>
+                <span className={styles.heroBadge}>
+                  <Icons.Rocket size={16} variant="gold" /> Dành cho người mới
+                </span>
               </Motion>
               <Motion type="slide-up" delay={0.2}>
                 <h1 className={styles.heroTitle}>
@@ -41,21 +44,24 @@ export default async function Home() {
                     Xem khóa học
                   </Link>
                   <Link href="/resources" className="btn btn-secondary btn-lg">
-                    Tài nguyên miễn phí
+                    <Icons.Resource size={18} style={{ marginRight: '8px' }} /> Tài nguyên miễn phí
                   </Link>
                 </div>
               </Motion>
               <Motion type="fade" delay={0.6}>
                 <div className={styles.heroStats}>
                   <div className={styles.stat}>
+                    <div className={styles.statIcon}><Icons.Users size={32} variant="gold" /></div>
                     <span className={styles.statNumber}>1000+</span>
                     <span className={styles.statLabel}>Học viên</span>
                   </div>
                   <div className={styles.stat}>
+                    <div className={styles.statIcon}><Icons.Video size={32} variant="gold" /></div>
                     <span className={styles.statNumber}>50+</span>
                     <span className={styles.statLabel}>Bài học</span>
                   </div>
                   <div className={styles.stat}>
+                    <div className={styles.statIcon}><Icons.Course size={32} variant="gold" /></div>
                     <span className={styles.statNumber}>10+</span>
                     <span className={styles.statLabel}>Templates</span>
                   </div>
@@ -75,7 +81,9 @@ export default async function Home() {
             </Motion>
             <StaggerContainer className={styles.painGrid}>
               <Motion type="zoom" className={styles.painCard}>
-                <div className={styles.painIcon}>😰</div>
+                <div className={styles.painIcon}>
+                  <Icons.Alert size={40} variant="currentColor" />
+                </div>
                 <h3>Mông lung, không biết bắt đầu từ đâu</h3>
                 <p>
                   Thị trường tràn ngập kiến thức, bạn học TikTok thì quên Facebook,
@@ -83,7 +91,9 @@ export default async function Home() {
                 </p>
               </Motion>
               <Motion type="zoom" className={styles.painCard}>
-                <div className={styles.painIcon}>⏰</div>
+                <div className={styles.painIcon}>
+                  <Icons.Time size={40} variant="currentColor" />
+                </div>
                 <h3>Ngồi cả tiếng không viết nổi 1 caption</h3>
                 <p>
                   Hội chứng trang giấy trắng. Viết đi xóa lại, cuối cùng vẫn không
@@ -91,7 +101,9 @@ export default async function Home() {
                 </p>
               </Motion>
               <Motion type="zoom" className={styles.painCard}>
-                <div className={styles.painIcon}>🤖</div>
+                <div className={styles.painIcon}>
+                  <Icons.Robot size={40} variant="currentColor" />
+                </div>
                 <h3>Dùng AI nhưng bài viết vô hồn</h3>
                 <p>
                   ChatGPT viết nhanh đấy, nhưng đọc lên nghe như robot. Không có
@@ -99,7 +111,9 @@ export default async function Home() {
                 </p>
               </Motion>
               <Motion type="zoom" className={styles.painCard}>
-                <div className={styles.painIcon}>📊</div>
+                <div className={styles.painIcon}>
+                  <Icons.Stats size={40} variant="currentColor" />
+                </div>
                 <h3>Làm việc theo cảm hứng, kết quả bấp bênh</h3>
                 <p>
                   Hôm nay có ý tưởng thì viết, mai không có thì nghỉ. Không có
@@ -176,19 +190,19 @@ export default async function Home() {
                 <div className={styles.courseInfo}>
                   <div className={styles.courseModules}>
                     <div className={styles.moduleItem}>
-                      <span className={styles.moduleIcon}>📚</span>
+                      <span className={styles.moduleIcon}><Icons.Course size={20} variant="gold" /></span>
                       <span>10 Module chuyên sâu</span>
                     </div>
                     <div className={styles.moduleItem}>
-                      <span className={styles.moduleIcon}>🎥</span>
+                      <span className={styles.moduleIcon}><Icons.Video size={20} variant="gold" /></span>
                       <span>50+ Video bài giảng</span>
                     </div>
                     <div className={styles.moduleItem}>
-                      <span className={styles.moduleIcon}>📝</span>
+                      <span className={styles.moduleIcon}><Icons.Blog size={20} variant="gold" /></span>
                       <span>Templates & Prompts</span>
                     </div>
                     <div className={styles.moduleItem}>
-                      <span className={styles.moduleIcon}>🎯</span>
+                      <span className={styles.moduleIcon}><Icons.Target size={20} variant="gold" /></span>
                       <span>Bài tập thực hành</span>
                     </div>
                   </div>

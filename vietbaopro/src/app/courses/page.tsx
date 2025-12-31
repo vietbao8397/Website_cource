@@ -2,6 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import { Header, Footer } from "@/components/layout";
 import Link from "next/link";
 import styles from "./page.module.css";
+import { Icons } from "@/components/ui/Icons";
 import { Motion, StaggerContainer } from "@/components/ui/Motion";
 
 function formatPrice(price: number): string {
@@ -77,7 +78,7 @@ export default async function CoursesPage() {
                                             >
                                                 <div className={styles.courseThumbnail}>
                                                     <div className={styles.thumbnailPlaceholder}>
-                                                        <span>📚</span>
+                                                        <Icons.Course size={48} variant="gold" />
                                                     </div>
                                                     {course.slug === 'pro-content-system' && (
                                                         <span className={styles.badge}>Bestseller</span>
@@ -90,10 +91,10 @@ export default async function CoursesPage() {
                                                     </p>
                                                     <div className={styles.courseMeta}>
                                                         <span className={styles.metaItem}>
-                                                            📖 14 ngày (dự kiến)
+                                                            <Icons.BookOpen size={16} /> 14 ngày
                                                         </span>
                                                         <span className={styles.metaItem}>
-                                                            🎥 {lessonCount} Bài
+                                                            <Icons.Video size={16} /> {lessonCount} Bài
                                                         </span>
                                                     </div>
                                                     <div className={styles.courseFooter}>
@@ -113,7 +114,9 @@ export default async function CoursesPage() {
                                                                 </span>
                                                             )}
                                                         </div>
-                                                        <span className={styles.viewButton}>Xem chi tiết →</span>
+                                                        <span className={styles.viewButton}>
+                                                            Xem chi tiết <Icons.ChevronRight size={14} />
+                                                        </span>
                                                     </div>
                                                 </div>
                                             </Link>
@@ -141,7 +144,9 @@ export default async function CoursesPage() {
                                 </Link>
                             </div>
                             <div className={styles.resourcesVisual}>
-                                <div className={styles.resourceIcon}>🎁</div>
+                                <div className={styles.resourceIcon}>
+                                    <Icons.Resource size={80} variant="gold" />
+                                </div>
                             </div>
                         </Motion>
                     </div>

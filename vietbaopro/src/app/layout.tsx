@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Icons } from "@/components/ui/Icons";
 import "./globals.css";
 
 const inter = Inter({
@@ -37,7 +38,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="vi" className={inter.variable}>
-      <body>{children}</body>
+      <body>
+        <Icons.Gradient />
+        {children}
+      </body>
     </html>
   );
 }
