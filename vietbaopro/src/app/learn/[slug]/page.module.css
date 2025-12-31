@@ -289,3 +289,108 @@
         width: 100%;
     }
 }
+
+/* Rich Content */
+.lessonRichContent {
+    color: var(--color-text-primary);
+    line-height: var(--line-height-relaxed);
+    margin: var(--spacing-xl) 0 var(--spacing-2xl);
+}
+
+.lessonRichContent h2,
+.lessonRichContent h3 {
+    margin: var(--spacing-xl) 0 var(--spacing-md);
+    color: var(--color-accent-gold);
+}
+
+.lessonRichContent p {
+    margin-bottom: var(--spacing-md);
+}
+
+.lessonRichContent img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    margin: var(--spacing-lg) 0;
+    box-shadow: var(--shadow-md);
+}
+
+.lessonRichContent ul,
+.lessonRichContent ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-xl);
+}
+
+.lessonRichContent li {
+    margin-bottom: var(--spacing-xs);
+}
+
+/* Resource Section */
+.resourceSection {
+    margin-top: var(--spacing-2xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+}
+
+.resourceSection h3 {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-lg);
+}
+
+.resourceCard {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-lg);
+    background: var(--color-bg-canvas);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+}
+
+.resourceInfo {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    flex: 1;
+}
+
+.resourceIcon {
+    font-size: 2rem;
+    background: var(--color-bg-surface);
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+}
+
+.resourceText {
+    display: flex;
+    flex-direction: column;
+}
+
+.resourceName {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+}
+
+.resourceHint {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+}
+
+@media (max-width: 640px) {
+    .resourceCard {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .resourceIcon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.5rem;
+    }
+}

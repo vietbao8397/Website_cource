@@ -12,6 +12,8 @@ interface LessonPlayerProps {
     youtubeVideoId: string;
     title: string;
     description: string | null;
+    content: string | null;
+    resourceUrl: string | null;
     isCompleted: boolean;
     nextLessonUrl: string | null;
     prevLessonUrl: string | null;
@@ -23,6 +25,8 @@ export default function LessonPlayer({
     youtubeVideoId,
     title,
     description,
+    content,
+    resourceUrl,
     isCompleted: initialCompleted,
     nextLessonUrl,
     prevLessonUrl,
@@ -144,6 +148,36 @@ export default function LessonPlayer({
                 {description && (
                     <div className={styles.lessonDescription}>
                         <p>{description}</p>
+                    </div>
+                )}
+
+                {content && (
+                    <div
+                        className={styles.lessonRichContent}
+                        dangerouslySetInnerHTML={{ __html: content }}
+                    />
+                )}
+
+                {resourceUrl && (
+                    <div className={styles.resourceSection}>
+                        <h3>📚 Tài liệu đính kèm</h3>
+                        <div className={styles.resourceCard}>
+                            <div className={styles.resourceInfo}>
+                                <div className={styles.resourceIcon}>📎</div>
+                                <div className={styles.resourceText}>
+                                    <span className={styles.resourceName}>Tài nguyên bài học</span>
+                                    <span className={styles.resourceHint}>Nhấn vào nút bên cạnh để tải về hoặc xem chi tiết</span>
+                                </div>
+                            </div>
+                            <a
+                                href={resourceUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="btn btn-primary"
+                            >
+                                📥 Tải tài liệu
+                            </a>
+                        </div>
                     </div>
                 )}
 

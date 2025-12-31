@@ -14,6 +14,8 @@ interface Lesson {
     chapter_title: string;
     chapter_index: number;
     lesson_index: number;
+    content: string | null;
+    resource_url: string | null;
     is_preview: boolean;
 }
 
@@ -236,6 +238,8 @@ export default async function LearnPage({
                             youtubeVideoId={currentLesson.youtube_video_id || ""}
                             title={currentLesson.title}
                             description={currentLesson.description}
+                            content={currentLesson.content}
+                            resourceUrl={currentLesson.resource_url}
                             isCompleted={!!progress[currentLesson.id]}
                             nextLessonUrl={nextLesson ? `/learn/${slug}?lesson=${nextLesson.id}` : null}
                             prevLessonUrl={prevLesson ? `/learn/${slug}?lesson=${prevLesson.id}` : null}

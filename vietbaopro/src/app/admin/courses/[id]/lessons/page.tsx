@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
+import ImageUpload from "@/components/admin/ImageUpload";
 import styles from "./page.module.css";
 import { extractYouTubeId } from "@/lib/youtube";
 
@@ -15,6 +16,8 @@ interface Lesson {
     lesson_index: number;
     duration_minutes: number | null;
     youtube_video_id: string | null;
+    content: string | null;
+    resource_url: string | null;
     is_preview: boolean;
 }
 
@@ -44,6 +47,8 @@ export default function LessonsPage({
         lesson_index: 1,
         duration_minutes: "",
         youtube_video_id: "",
+        content: "",
+        resource_url: "",
         is_preview: false,
     });
     const [isFetchingYoutube, setIsFetchingYoutube] = useState(false);
@@ -87,12 +92,14 @@ export default function LessonsPage({
             lesson_index: lessons.filter((l) => l.chapter_index === (lessons.length > 0 ? lessons[lessons.length - 1].chapter_index : 1)).length + 1,
             duration_minutes: "",
             youtube_video_id: "",
+            content: "",
+            resource_url: "",
             is_preview: false,
         });
     };
 
     const handleChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
     ) => {
         const { name, value, type } = e.target;
         setFormData((prev) => ({
@@ -116,6 +123,8 @@ export default function LessonsPage({
                 lesson_index: Number(formData.lesson_index),
                 duration_minutes: formData.duration_minutes ? Number(formData.duration_minutes) : null,
                 youtube_video_id: formData.youtube_video_id || null,
+                content: formData.content || null,
+                resource_url: formData.resource_url || null,
                 is_preview: formData.is_preview,
             })
             .select()
@@ -180,6 +189,8 @@ export default function LessonsPage({
                 lesson_index: Number(formData.lesson_index),
                 duration_minutes: formData.duration_minutes ? Number(formData.duration_minutes) : null,
                 youtube_video_id: formData.youtube_video_id || null,
+                content: formData.content || null,
+                resource_url: formData.resource_url || null,
                 is_preview: formData.is_preview,
             })
             .eq("id", editingLesson.id);
@@ -236,6 +247,8 @@ export default function LessonsPage({
             lesson_index: lesson.lesson_index,
             duration_minutes: lesson.duration_minutes?.toString() || "",
             youtube_video_id: lesson.youtube_video_id || "",
+            content: lesson.content || "",
+            resource_url: lesson.resource_url || "",
             is_preview: lesson.is_preview,
         });
         setShowAddForm(false);
@@ -360,6 +373,16 @@ export default function LessonsPage({
                             </div>
                         </div>
                         <div className={styles.formGroup}>
+                            <label>Link tài nguyên (Download)</label>
+                            <input
+                                type="text"
+                                name="resource_url"
+                                value={formData.resource_url}
+                                onChange={handleChange}
+                                placeholder="Dán link Google Drive, Dropbox, v.v."
+                            />
+                        </div>
+                        <div className={styles.formGroup} style={{ gridColumn: "1 / -1" }}>
                             <label className={styles.checkboxLabel}>
                                 <input
                                     type="checkbox"
@@ -369,6 +392,44 @@ export default function LessonsPage({
                                 />
                                 Cho phép xem miễn phí
                             </label>
+                        </div>
+
+                        {/* Content Area with Rich Text Helper */}
+                        <div className={styles.formGroup} style={{ gridColumn: "1 / -1" }}>
+                            <label>
+                                Nội dung bài giảng (Hỗ trợ HTML)
+                                <span className={styles.tooltip}>
+                                    ℹ️
+                                    <span className={styles.tooltipText}>
+                                        Sử dụng HTML để định dạng: &lt;h2&gt;, &lt;p&gt;, &lt;img&gt;, &lt;ul&gt;...
+                                    </span>
+                                </span>
+                            </label>
+                            <div className={styles.editorToolbar}>
+                                <span className={styles.toolbarHint}>
+                                    💡 Sử dụng HTML để định dạng. Bạn có thể tải ảnh lên Drive để lấy link tự động chèn vào.
+                                </span>
+                                <div className={styles.inlineUpload}>
+                                    <ImageUpload
+                                        label="Tải ảnh minh họa"
+                                        value=""
+                                        onChange={(url) => {
+                                            if (url) {
+                                                const imgHtml = `\n<img src="${url}" alt="image" />\n`;
+                                                setFormData(prev => ({ ...prev, content: prev.content + imgHtml }));
+                                            }
+                                        }}
+                                    />
+                                </div>
+                            </div>
+                            <textarea
+                                name="content"
+                                value={formData.content}
+                                onChange={handleChange}
+                                rows={12}
+                                className={styles.codeEditor}
+                                placeholder="Tiêu đề, đoạn văn và ảnh minh họa cho bài học..."
+                            />
                         </div>
                     </div>
                     <div className={styles.formActions}>
