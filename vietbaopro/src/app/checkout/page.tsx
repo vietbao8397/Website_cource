@@ -53,6 +53,7 @@ function CheckoutContent() {
                 return;
             }
 
+            console.log("Fetching course with:", { courseSlug, courseId });
             const supabase = createClient();
             let query = supabase
                 .from("courses")
@@ -65,8 +66,9 @@ function CheckoutContent() {
             }
 
             const { data, error } = await query.single();
-
+            if (error) console.error("Fetch error:", error);
             if (data) {
+                console.log("Course found:", data);
                 setCourse(data);
             }
             setIsLoadingCourse(false);

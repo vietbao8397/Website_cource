@@ -50,11 +50,11 @@ export default function Header() {
 
                 {/* Desktop Navigation */}
                 <nav className={styles.nav}>
-                    <Link href="/courses" className={styles.navLink}>
-                        Khóa học
-                    </Link>
                     <Link href="/resources" className={styles.navLink}>
                         Tài nguyên
+                    </Link>
+                    <Link href="/courses" className={styles.navLink}>
+                        Khóa học
                     </Link>
                     <Link href="/about" className={styles.navLink}>
                         Về chúng tôi
@@ -123,11 +123,11 @@ export default function Header() {
             {/* Mobile Menu */}
             <div className={`${styles.mobileMenu} ${isMenuOpen ? styles.mobileMenuOpen : ""}`}>
                 <nav className={styles.mobileNav}>
-                    <Link href="/courses" className={styles.mobileNavLink} onClick={() => setIsMenuOpen(false)}>
-                        Khóa học
-                    </Link>
                     <Link href="/resources" className={styles.mobileNavLink} onClick={() => setIsMenuOpen(false)}>
                         Tài nguyên
+                    </Link>
+                    <Link href="/courses" className={styles.mobileNavLink} onClick={() => setIsMenuOpen(false)}>
+                        Khóa học
                     </Link>
                     <Link href="/about" className={styles.mobileNavLink} onClick={() => setIsMenuOpen(false)}>
                         Về chúng tôi

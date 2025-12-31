@@ -49,7 +49,7 @@ export default async function AdminLayout({
             📦 Đơn hàng
           </Link>
           <Link href="/admin/courses" className={styles.navItem}>
-            📚 Khóa học
+            📚 Khóa học & Tài nguyên
           </Link>
           <Link href="/admin/blog" className={styles.navItem}>
             ✍️ Blog
