@@ -176,7 +176,7 @@ export default async function AdminDashboard() {
                                                 <span>{order.customer_email}</span>
                                             </div>
                                         </td>
-                                        <td>{(order.courses as unknown as { title: string })?.title || "N/A"}</td>
+                                        <td>{(order.courses as any)?.[0]?.title || "N/A"}</td>
                                         <td>{formatPrice(order.amount)}</td>
                                         <td>
                                             <span

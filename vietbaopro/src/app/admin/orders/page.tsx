@@ -110,12 +110,12 @@ export default async function AdminOrdersPage({
                                     </td>
                                     <td>
                                         <div className={styles.customerInfo}>
-                                            <strong>{order.customer_name || (order.profiles as { full_name: string })?.full_name || "N/A"}</strong>
-                                            <span>{order.customer_email || (order.profiles as { email: string })?.email}</span>
+                                            <strong>{order.customer_name || (order.profiles as any)?.[0]?.full_name || "N/A"}</strong>
+                                            <span>{order.customer_email || (order.profiles as any)?.[0]?.email}</span>
                                             {order.customer_phone && <span>📞 {order.customer_phone}</span>}
                                         </div>
                                     </td>
-                                    <td>{(order.courses as { title: string })?.title || "N/A"}</td>
+                                    <td>{(order.courses as any)?.[0]?.title || "N/A"}</td>
                                     <td className={styles.amount}>{formatPrice(order.amount)}</td>
                                     <td>
                                         <span
@@ -138,11 +138,11 @@ export default async function AdminOrdersPage({
                                                 <ApproveButton
                                                     orderId={order.id}
                                                     userId={order.user_id}
-                                                    courseId={(order.courses as { id: string; title: string; slug: string })?.id}
-                                                    customerEmail={order.customer_email || (order.profiles as { email: string })?.email || ""}
-                                                    customerName={order.customer_name || (order.profiles as { full_name: string })?.full_name || "Khách hàng"}
-                                                    courseName={(order.courses as { title: string })?.title || "Khóa học"}
-                                                    courseSlug={(order.courses as { slug: string })?.slug || ""}
+                                                    courseId={(order.courses as any)?.[0]?.id}
+                                                    customerEmail={order.customer_email || (order.profiles as any)?.[0]?.email || ""}
+                                                    customerName={order.customer_name || (order.profiles as any)?.[0]?.full_name || "Khách hàng"}
+                                                    courseName={(order.courses as any)?.[0]?.title || "Khóa học"}
+                                                    courseSlug={(order.courses as any)?.[0]?.slug || ""}
                                                 />
                                             </div>
                                         )}
