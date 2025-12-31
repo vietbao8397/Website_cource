@@ -103,6 +103,20 @@ export default async function LearnPage({
         .order("chapter_index")
         .order("lesson_index");
 
+    // Fetch user progress for all lessons in this course
+    const { data: lessonProgress } = await supabase
+        .from("lesson_progress")
+        .select("lesson_id, completed")
+        .eq("user_id", user.id)
+        .eq("course_id", course.id);
+
+    const progressObj: Record<string, boolean> = {};
+    if (lessonProgress) {
+        lessonProgress.forEach(lp => {
+            progressObj[lp.lesson_id] = lp.completed;
+        });
+    }
+
     if (!lessons || lessons.length === 0) {
         return (
             <>
@@ -135,7 +149,7 @@ export default async function LearnPage({
     const chapters = groupLessonsByChapter(lessons);
 
     // Get progress
-    const progress = enrollment.progress || {};
+    const progress = progressObj;
 
     // Calculate overall progress
     const completedCount = Object.values(progress).filter(Boolean).length;
@@ -216,6 +230,7 @@ export default async function LearnPage({
                     {/* Main Content - Video Player */}
                     <div className={styles.content}>
                         <LessonPlayer
+                            key={currentLesson.id}
                             lessonId={currentLesson.id}
                             courseId={course.id}
                             youtubeVideoId={currentLesson.youtube_video_id || ""}

@@ -60,6 +60,20 @@ export default async function UserDetailPage({
         .eq("user_id", userId)
         .order("created_at", { ascending: false });
 
+    // Fetch user progress for all lessons
+    const { data: userLessonProgress } = await supabase
+        .from("lesson_progress")
+        .select("course_id, lesson_id, completed")
+        .eq("user_id", userId)
+        .eq("completed", true);
+
+    const completedCounts: Record<string, number> = {};
+    if (userLessonProgress) {
+        userLessonProgress.forEach(lp => {
+            completedCounts[lp.course_id] = (completedCounts[lp.course_id] || 0) + 1;
+        });
+    }
+
     // Fetch lesson counts for enrolled courses
     const courseIds = enrollments?.map((e) => e.course_id) || [];
     let lessonCounts: Record<string, number> = {};
@@ -109,8 +123,7 @@ export default async function UserDetailPage({
     function calculateProgress(enrollment: Enrollment): number {
         const lessonCount = lessonCounts[enrollment.course_id] || 0;
         if (lessonCount === 0) return 0;
-        const progressObj = (enrollment.progress as Record<string, any>) || {};
-        const completedCount = Object.values(progressObj).filter(Boolean).length;
+        const completedCount = completedCounts[enrollment.course_id] || 0;
         return Math.round((completedCount / lessonCount) * 100);
     }
 
@@ -165,7 +178,7 @@ export default async function UserDetailPage({
                             if (!course) return null;
                             const progress = calculateProgress(enrollment);
                             const lessonCount = lessonCounts[enrollment.course_id] || 0;
-                            const completedCount = Object.values(enrollment.progress || {}).filter(Boolean).length;
+                            const completedCount = completedCounts[enrollment.course_id] || 0;
 
                             return (
                                 <div key={enrollment.id} className={styles.enrollmentCard}>

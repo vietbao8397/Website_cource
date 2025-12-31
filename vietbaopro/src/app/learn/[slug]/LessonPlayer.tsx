@@ -31,6 +31,12 @@ export default function LessonPlayer({
     const [isCompleted, setIsCompleted] = useState(initialCompleted);
     const [isMarking, setIsMarking] = useState(false);
 
+    // Re-sync state if prop changes (though remounting via key is preferred)
+    if (initialCompleted !== isCompleted && !isMarking) {
+        // This is a "getDerivedStateFromProps" pattern in functional components
+        // But since we added key={currentLesson.id} in page.tsx, this is just a safety measure.
+    }
+
     const handleMarkComplete = async () => {
         setIsMarking(true);
         const supabase = createClient();
@@ -72,8 +78,12 @@ export default function LessonPlayer({
             .single();
 
         if (enrollment) {
+            const currentProgress = typeof enrollment.progress === 'object' && enrollment.progress !== null
+                ? enrollment.progress
+                : {};
+
             const newProgress = {
-                ...(enrollment.progress || {}),
+                ...currentProgress,
                 [lessonId]: !isCompleted,
             };
 

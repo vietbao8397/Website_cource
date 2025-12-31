@@ -63,13 +63,15 @@ export default async function MyLearningPage() {
     const courseIds = enrolledCourses.map((e) => (e.courses as any)?.[0]?.id).filter(Boolean);
 
     let lessonCounts: LessonCount[] = [];
+    let completedLessonCounts: Record<string, number> = {};
+
     if (courseIds.length > 0) {
+        // Get total lessons count
         const { data: lessons } = await supabase
             .from("lessons")
             .select("course_id")
             .in("course_id", courseIds);
 
-        // Count lessons per course
         const countMap: Record<string, number> = {};
         lessons?.forEach((l) => {
             countMap[l.course_id] = (countMap[l.course_id] || 0) + 1;
@@ -78,6 +80,18 @@ export default async function MyLearningPage() {
             course_id,
             count,
         }));
+
+        // Get completed lessons count from lesson_progress table
+        const { data: completedProgress } = await supabase
+            .from("lesson_progress")
+            .select("course_id")
+            .eq("user_id", user.id)
+            .eq("completed", true)
+            .in("course_id", courseIds);
+
+        completedProgress?.forEach((cp) => {
+            completedLessonCounts[cp.course_id] = (completedLessonCounts[cp.course_id] || 0) + 1;
+        });
     }
 
     // Calculate progress for each enrollment
@@ -87,7 +101,7 @@ export default async function MyLearningPage() {
 
         const isResource = course.type === 'resource';
         const lessonCount = isResource ? 0 : (lessonCounts.find((lc) => lc.course_id === course.id)?.count || 0);
-        const completedCount = isResource ? 0 : Object.values(enrollment.progress || {}).filter(Boolean).length;
+        const completedCount = isResource ? 0 : (completedLessonCounts[course.id] || 0);
         const progressPercent = lessonCount > 0 ? Math.round((completedCount / lessonCount) * 100) : 0;
 
         return {
