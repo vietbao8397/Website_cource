@@ -31,6 +31,7 @@ interface Course {
 function CheckoutContent() {
     const searchParams = useSearchParams();
     const courseSlug = searchParams.get("course");
+    const courseId = searchParams.get("courseId");
 
     const [course, setCourse] = useState<Course | null>(null);
     const [formData, setFormData] = useState({
@@ -47,17 +48,23 @@ function CheckoutContent() {
 
     useEffect(() => {
         async function fetchCourse() {
-            if (!courseSlug) {
+            if (!courseSlug && !courseId) {
                 setIsLoadingCourse(false);
                 return;
             }
 
             const supabase = createClient();
-            const { data, error } = await supabase
+            let query = supabase
                 .from("courses")
-                .select("id, title, price, sale_price, slug")
-                .eq("slug", courseSlug)
-                .single();
+                .select("id, title, price, sale_price, slug");
+
+            if (courseId) {
+                query = query.eq("id", courseId);
+            } else {
+                query = query.eq("slug", courseSlug);
+            }
+
+            const { data, error } = await query.single();
 
             if (data) {
                 setCourse(data);

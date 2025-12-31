@@ -53,6 +53,9 @@ export default function Header() {
                     <Link href="/courses" className={styles.navLink}>
                         Khóa học
                     </Link>
+                    <Link href="/resources" className={styles.navLink}>
+                        Tài nguyên
+                    </Link>
                     <Link href="/about" className={styles.navLink}>
                         Về chúng tôi
                     </Link>
@@ -122,6 +125,9 @@ export default function Header() {
                 <nav className={styles.mobileNav}>
                     <Link href="/courses" className={styles.mobileNavLink} onClick={() => setIsMenuOpen(false)}>
                         Khóa học
+                    </Link>
+                    <Link href="/resources" className={styles.mobileNavLink} onClick={() => setIsMenuOpen(false)}>
+                        Tài nguyên
                     </Link>
                     <Link href="/about" className={styles.mobileNavLink} onClick={() => setIsMenuOpen(false)}>
                         Về chúng tôi
