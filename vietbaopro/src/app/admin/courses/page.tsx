@@ -68,7 +68,12 @@ export default async function AdminCoursesPage() {
                                     <tr key={course.id}>
                                         <td>
                                             <div className={styles.courseInfo}>
-                                                <strong>{course.title}</strong>
+                                                <div className={styles.titleWrapper}>
+                                                    <strong>{course.title}</strong>
+                                                    <span className={`${styles.typeBadge} ${styles[`type_${course.type || 'course'}`]}`}>
+                                                        {course.type === 'resource' ? '🎁 Tài nguyên' : '🎓 Khóa học'}
+                                                    </span>
+                                                </div>
                                                 <span className={styles.slug}>/{course.slug}</span>
                                             </div>
                                         </td>

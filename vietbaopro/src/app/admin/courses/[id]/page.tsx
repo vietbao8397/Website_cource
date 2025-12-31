@@ -38,6 +38,8 @@ export default function EditCoursePage({
         sale_price: "",
         youtube_preview_id: "",
         status: "draft",
+        type: "course",
+        resource_url: "",
     });
 
     useEffect(() => {
@@ -67,6 +69,8 @@ export default function EditCoursePage({
                 sale_price: course.sale_price?.toString() || "",
                 youtube_preview_id: course.youtube_preview_id || "",
                 status: course.status,
+                type: course.type || "course",
+                resource_url: course.resource_url || "",
             });
             setIsLoading(false);
         }
@@ -101,6 +105,8 @@ export default function EditCoursePage({
                 sale_price: formData.sale_price ? Number(formData.sale_price) : null,
                 youtube_preview_id: formData.youtube_preview_id || null,
                 status: formData.status,
+                type: formData.type,
+                resource_url: formData.type === "resource" ? formData.resource_url : null,
             })
             .eq("id", courseId);
 
@@ -221,7 +227,32 @@ export default function EditCoursePage({
                             <option value="published">✓ Công khai</option>
                         </select>
                     </div>
-                </div>
+
+                    <div className={styles.formGroup}>
+                        <label>Loại Content</label>
+                        <select name="type" value={formData.type} onChange={handleChange}>
+                            <option value="course">🎓 Khóa học</option>
+                            <option value="resource">🎁 Tài nguyên</option>
+                        </select>
+                    </div>
+
+                    {
+                        formData.type === "resource" && (
+                            <div className={styles.formGroup} style={{ gridColumn: "1 / -1" }}>
+                                <label>Link tài nguyên (Resource URL) *</label>
+                                <input
+                                    type="url"
+                                    name="resource_url"
+                                    value={formData.resource_url}
+                                    onChange={handleChange}
+                                    placeholder="https://notion.so/my-template"
+                                    required={formData.type === "resource"}
+                                />
+                                <span className={styles.hint}>Link này sẽ hiển thị cho người dùng sau khi đã đăng nhập/mua.</span>
+                            </div>
+                        )
+                    }
+                </div >
 
                 <div className={styles.formActions}>
                     <Link href={`/admin/courses/${courseId}/lessons`} className={styles.lessonsLink}>
@@ -236,7 +267,7 @@ export default function EditCoursePage({
                         </button>
                     </div>
                 </div>
-            </form>
-        </div>
+            </form >
+        </div >
     );
 }

@@ -29,6 +29,7 @@ export default async function CoursesPage() {
       lessons (count)
     `)
         .eq("status", "published")
+        .eq("type", "course")
         .order("created_at", { ascending: false });
 
     if (error) {
