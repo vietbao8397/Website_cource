@@ -1,0 +1,1 @@
+SELECT slug FROM courses; 

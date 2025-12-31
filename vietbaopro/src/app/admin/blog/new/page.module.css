@@ -1,0 +1,227 @@
+.formPage {
+    max-width: 900px;
+}
+
+.header {
+    margin-bottom: var(--spacing-xl);
+}
+
+.backLink {
+    display: inline-block;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    text-decoration: none;
+    margin-bottom: var(--spacing-md);
+}
+
+.backLink:hover {
+    color: var(--color-accent-gold);
+}
+
+.header h1 {
+    font-size: var(--font-size-2xl);
+}
+
+.form {
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+}
+
+.error {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid var(--color-error);
+    color: var(--color-error);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.formGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.formGroup label {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-secondary);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+/* Tooltip */
+.tooltip {
+    position: relative;
+    cursor: help;
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+}
+
+.tooltipText {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--color-bg-canvas);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-secondary);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-normal);
+    white-space: normal;
+    width: 250px;
+    line-height: 1.5;
+    z-index: 100;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: opacity var(--transition-fast), visibility var(--transition-fast);
+    margin-bottom: var(--spacing-xs);
+}
+
+.tooltip:hover .tooltipText {
+    visibility: visible;
+    opacity: 1;
+}
+
+.formGroup input,
+.formGroup textarea,
+.formGroup select {
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: var(--color-bg-canvas);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-base);
+    color: var(--color-text-primary);
+    transition: border-color var(--transition-fast);
+}
+
+.formGroup input:focus,
+.formGroup textarea:focus,
+.formGroup select:focus {
+    outline: none;
+    border-color: var(--color-accent-gold);
+}
+
+.formGroup textarea {
+    resize: vertical;
+    min-height: 100px;
+    font-family: inherit;
+}
+
+.hint {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+}
+
+/* Editor Toolbar */
+.editorToolbar {
+    background: var(--color-bg-canvas);
+    border: 1px solid var(--color-border);
+    border-bottom: none;
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    padding: var(--spacing-sm) var(--spacing-md);
+}
+
+.toolbarHint {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+}
+
+.codeEditor {
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: var(--font-size-sm);
+    line-height: 1.6;
+    border-radius: 0 0 var(--radius-md) var(--radius-md) !important;
+    min-height: 400px !important;
+}
+
+/* Scheduling */
+.checkboxLabel {
+    flex-direction: row !important;
+    align-items: center;
+    gap: var(--spacing-sm) !important;
+    cursor: pointer;
+    font-weight: var(--font-weight-normal) !important;
+}
+
+.checkboxLabel input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--color-accent-gold);
+}
+
+.scheduleBox {
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-md);
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    border-radius: var(--radius-md);
+}
+
+.scheduleInput {
+    margin-bottom: var(--spacing-sm);
+}
+
+.scheduleNote {
+    display: block;
+    font-size: var(--font-size-xs);
+    color: #3b82f6;
+}
+
+/* Actions */
+.formActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--spacing-md);
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--color-border);
+}
+
+.cancelBtn {
+    padding: var(--spacing-sm) var(--spacing-xl);
+    background: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+}
+
+.submitBtn {
+    padding: var(--spacing-sm) var(--spacing-xl);
+    background: var(--color-accent-gold);
+    border: none;
+    border-radius: var(--radius-md);
+    color: var(--color-bg-canvas);
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+}
+
+.submitBtn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+    .formGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .tooltipText {
+        left: 0;
+        transform: none;
+        width: 200px;
+    }
+}

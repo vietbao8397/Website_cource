@@ -1,0 +1,408 @@
+.main {
+    padding-top: 72px;
+}
+
+/* Hero Section */
+.hero {
+    padding: var(--spacing-3xl) 0;
+    background: var(--color-bg-surface);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.heroGrid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: var(--spacing-3xl);
+    align-items: start;
+}
+
+/* Video */
+.videoWrapper {
+    position: sticky;
+    top: calc(72px + var(--spacing-lg));
+}
+
+.videoContainer {
+    position: relative;
+    padding-bottom: 56.25%;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--color-bg-canvas);
+    border: 1px solid var(--color-border);
+}
+
+.video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* Course Info */
+.courseInfo {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.courseTitle {
+    font-size: var(--font-size-3xl);
+    line-height: 1.2;
+    margin: 0;
+}
+
+.courseShortDesc {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+    margin: 0;
+}
+
+/* Instructor */
+.instructor {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.instructorAvatar {
+    width: 48px;
+    height: 48px;
+    background: var(--color-accent-gold-light);
+    color: var(--color-accent-gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: var(--font-weight-bold);
+}
+
+.instructorInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.instructorInfo strong {
+    color: var(--color-text-primary);
+}
+
+.instructorInfo span {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+/* Stats */
+.stats {
+    display: flex;
+    gap: var(--spacing-xl);
+}
+
+.statItem {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+}
+
+.statIcon {
+    font-size: var(--font-size-lg);
+}
+
+/* Price Box */
+.priceBox {
+    background: var(--color-bg-canvas);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-lg);
+}
+
+.priceInfo {
+    display: flex;
+    align-items: baseline;
+    gap: var(--spacing-md);
+}
+
+.priceOriginal {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-muted);
+    text-decoration: line-through;
+}
+
+.priceCurrent {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-accent-gold);
+}
+
+/* Content Grid */
+.contentGrid {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: var(--spacing-3xl);
+    padding: var(--spacing-3xl) 0;
+}
+
+/* Main Content */
+.mainContent {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3xl);
+}
+
+.section h2 {
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--spacing-xl);
+}
+
+.description p {
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-relaxed);
+    margin-bottom: var(--spacing-md);
+    white-space: pre-line;
+}
+
+/* Curriculum Accordion */
+.module {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-md);
+    overflow: hidden;
+    background: var(--color-bg-surface);
+    transition: all var(--transition-normal);
+}
+
+.moduleExpanded {
+    border-color: var(--color-accent-gold);
+}
+
+.moduleHeader {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-lg);
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    color: inherit;
+}
+
+.moduleHeader:hover {
+    background: var(--color-bg-hover);
+}
+
+.moduleTitle {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.moduleNumber {
+    width: 32px;
+    height: 32px;
+    background: var(--color-bg-canvas);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-sm);
+    color: var(--color-accent-gold);
+}
+
+.moduleHeader h3 {
+    font-size: var(--font-size-base);
+    margin: 0;
+}
+
+.moduleMeta {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.lessonCount {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+.accordionIcon {
+    font-size: 1.2rem;
+    color: var(--color-accent-gold);
+    font-weight: bold;
+}
+
+.lessonList {
+    background: var(--color-bg-canvas);
+    border-top: 1px solid var(--color-border);
+}
+
+.lessonItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.lessonItem:last-child {
+    border-bottom: none;
+}
+
+.lessonInfo {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.lessonNumber {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    min-width: 32px;
+}
+
+.lessonTitle {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-primary);
+}
+
+.previewBadge {
+    font-size: var(--font-size-xs);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background: var(--color-accent-gold-light);
+    color: var(--color-accent-gold);
+    border-radius: var(--radius-sm);
+}
+
+.lessonDuration {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+/* Testimonials */
+.testimonials {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-lg);
+}
+
+.testimonialCard {
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+}
+
+.testimonialCard p {
+    font-style: italic;
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-relaxed);
+    margin-bottom: var(--spacing-md);
+}
+
+.testimonialAuthor {
+    display: flex;
+    flex-direction: column;
+}
+
+.testimonialAuthor strong {
+    color: var(--color-text-primary);
+}
+
+.testimonialAuthor span {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+/* Sidebar */
+.sidebar {
+    position: sticky;
+    top: calc(72px + var(--spacing-lg));
+}
+
+.sidebarCard {
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+}
+
+.sidebarCard h3 {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-lg);
+}
+
+.highlightList {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--spacing-xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.highlightList li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+}
+
+.checkIcon {
+    color: var(--color-accent-gold);
+    font-weight: var(--font-weight-bold);
+}
+
+.sidebarPrice {
+    display: flex;
+    align-items: baseline;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .heroGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .videoWrapper {
+        position: static;
+    }
+
+    .contentGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        position: static;
+        order: -1;
+    }
+}
+
+@media (max-width: 768px) {
+    .priceBox {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .priceInfo {
+        justify-content: center;
+    }
+
+    .stats {
+        flex-wrap: wrap;
+    }
+
+    .testimonials {
+        grid-template-columns: 1fr;
+    }
+}

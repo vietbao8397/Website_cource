@@ -1,0 +1,301 @@
+.lessonsPage {
+    max-width: 900px;
+}
+
+.header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+}
+
+.backLink {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    text-decoration: none;
+}
+
+.backLink:hover {
+    color: var(--color-accent-gold);
+}
+
+.headerInfo {
+    flex: 1;
+}
+
+.headerInfo h1 {
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--spacing-xs);
+}
+
+.headerInfo p {
+    color: var(--color-text-muted);
+}
+
+.addBtn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-accent-gold);
+    border: none;
+    border-radius: var(--radius-md);
+    color: var(--color-bg-canvas);
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.addBtn:hover {
+    filter: brightness(1.1);
+}
+
+/* Form Card */
+.formCard {
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-accent-gold);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+    margin-bottom: var(--spacing-xl);
+}
+
+.formCard h3 {
+    margin-bottom: var(--spacing-lg);
+}
+
+.formGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.formGroup label {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+}
+
+.formGroup input[type="text"],
+.formGroup input[type="number"] {
+    padding: var(--spacing-sm);
+    background: var(--color-bg-canvas);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-primary);
+}
+
+.inputWithAction {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.inputWithAction input {
+    flex: 1;
+}
+
+.fetchBtn {
+    padding: 0 var(--spacing-md);
+    background: var(--color-bg-canvas);
+    border: 1px solid var(--color-accent-gold);
+    border-radius: var(--radius-md);
+    color: var(--color-accent-gold);
+    font-size: var(--font-size-xs);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all var(--transition-fast);
+}
+
+.fetchBtn:hover:not(:disabled) {
+    background: var(--color-accent-gold);
+    color: var(--color-bg-canvas);
+}
+
+.fetchBtn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    border-color: var(--color-border);
+    color: var(--color-text-muted);
+}
+
+.formGroup input:focus {
+    outline: none;
+    border-color: var(--color-accent-gold);
+}
+
+.checkboxLabel {
+    flex-direction: row !important;
+    align-items: center;
+    gap: var(--spacing-sm) !important;
+    cursor: pointer;
+}
+
+.checkboxLabel input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--color-accent-gold);
+}
+
+.formActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--spacing-sm);
+}
+
+.cancelBtn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text-muted);
+    cursor: pointer;
+}
+
+.submitBtn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-accent-gold);
+    border: none;
+    border-radius: var(--radius-md);
+    color: var(--color-bg-canvas);
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+}
+
+/* Lessons Container */
+.lessonsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+}
+
+.chapter {
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.chapterTitle {
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: var(--color-bg-canvas);
+    font-size: var(--font-size-base);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.lessonsList {
+    display: flex;
+    flex-direction: column;
+}
+
+.lessonItem {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.lessonItem:last-child {
+    border-bottom: none;
+}
+
+.lessonItem:hover {
+    background: var(--color-bg-hover);
+}
+
+.lessonInfo {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.lessonNumber {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    min-width: 30px;
+}
+
+.lessonTitle {
+    font-size: var(--font-size-sm);
+}
+
+.previewBadge {
+    font-size: var(--font-size-xs);
+    padding: 2px 8px;
+    background: rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+    border-radius: var(--radius-full);
+}
+
+.lessonMeta {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+}
+
+.hasVideo {
+    font-size: var(--font-size-base);
+}
+
+.lessonActions {
+    display: flex;
+    gap: var(--spacing-xs);
+}
+
+.editBtn,
+.deleteBtn {
+    padding: var(--spacing-xs);
+    background: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.editBtn:hover {
+    border-color: var(--color-accent-gold);
+}
+
+.deleteBtn {
+    border-color: var(--color-error);
+}
+
+.deleteBtn:hover {
+    background: var(--color-error);
+}
+
+/* Empty State */
+.emptyState {
+    text-align: center;
+    padding: var(--spacing-2xl);
+    background: var(--color-bg-surface);
+    border: 1px dashed var(--color-border);
+    border-radius: var(--radius-lg);
+}
+
+.emptyState p {
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-lg);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+    }
+
+    .formGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .lessonItem {
+        flex-wrap: wrap;
+    }
+}

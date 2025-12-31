@@ -1,0 +1,325 @@
+.userDetailPage {
+    max-width: 1000px;
+}
+
+/* Header */
+.header {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.backLink {
+    display: inline-block;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    text-decoration: none;
+    margin-bottom: var(--spacing-lg);
+}
+
+.backLink:hover {
+    color: var(--color-accent-gold);
+}
+
+.userHeader {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xl);
+}
+
+.avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: var(--radius-full);
+    background: var(--color-accent-gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.avatar span {
+    color: var(--color-bg-canvas);
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-2xl);
+}
+
+.userMeta h1 {
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--spacing-xs);
+}
+
+.userMeta p {
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-sm);
+}
+
+/* Role Badges */
+.roleBadge {
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    border-radius: var(--radius-full);
+}
+
+.role_learner {
+    background: rgba(59, 130, 246, 0.2);
+    color: #3b82f6;
+}
+
+.role_admin {
+    background: rgba(251, 191, 36, 0.2);
+    color: #fbbf24;
+}
+
+/* Stats */
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-2xl);
+}
+
+.statCard {
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    text-align: center;
+}
+
+.statValue {
+    display: block;
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-accent-gold);
+    margin-bottom: var(--spacing-xs);
+}
+
+.statLabel {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+/* Sections */
+.section {
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+    margin-bottom: var(--spacing-xl);
+}
+
+.section h2 {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-lg);
+}
+
+.emptyText {
+    color: var(--color-text-muted);
+    text-align: center;
+    padding: var(--spacing-xl);
+}
+
+/* Enrollments */
+.enrollmentsList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.enrollmentCard {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: var(--spacing-lg);
+    align-items: center;
+    padding: var(--spacing-lg);
+    background: var(--color-bg-canvas);
+    border-radius: var(--radius-md);
+}
+
+.enrollmentInfo h3 {
+    font-size: var(--font-size-base);
+    margin-bottom: var(--spacing-xs);
+}
+
+.enrollmentMeta {
+    display: flex;
+    gap: var(--spacing-md);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+}
+
+.completedTag {
+    color: var(--color-success);
+}
+
+/* Progress */
+.progressSection {
+    width: 150px;
+}
+
+.progressInfo {
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--font-size-xs);
+    margin-bottom: var(--spacing-xs);
+}
+
+.progressPercent {
+    color: var(--color-accent-gold);
+    font-weight: var(--font-weight-semibold);
+}
+
+.progressBar {
+    height: 6px;
+    background: var(--color-border);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+
+.progressFill {
+    height: 100%;
+    background: var(--color-accent-gold);
+    border-radius: var(--radius-full);
+    transition: width var(--transition-normal);
+}
+
+/* Revoke Button */
+.revokeBtn {
+    padding: var(--spacing-xs) var(--spacing-md);
+    font-size: var(--font-size-xs);
+    background: transparent;
+    border: 1px solid var(--color-error);
+    border-radius: var(--radius-md);
+    color: var(--color-error);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.revokeBtn:hover {
+    background: var(--color-error);
+    color: white;
+}
+
+.confirmBox {
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-error);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    max-width: 200px;
+}
+
+.confirmBox p {
+    font-size: var(--font-size-xs);
+    margin-bottom: var(--spacing-sm);
+}
+
+.confirmActions {
+    display: flex;
+    gap: var(--spacing-xs);
+}
+
+.confirmBtn {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: var(--font-size-xs);
+    background: var(--color-error);
+    border: none;
+    border-radius: var(--radius-sm);
+    color: white;
+    cursor: pointer;
+}
+
+.cancelBtn {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: var(--font-size-xs);
+    background: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-muted);
+    cursor: pointer;
+}
+
+/* Table */
+.tableWrapper {
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th,
+.table td {
+    padding: var(--spacing-md);
+    text-align: left;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.table th {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+}
+
+.table td {
+    font-size: var(--font-size-sm);
+}
+
+.amount {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-accent-gold);
+}
+
+.date {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+}
+
+/* Status Badges */
+.statusBadge {
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    border-radius: var(--radius-full);
+}
+
+.status_paid {
+    background: rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+}
+
+.status_pending {
+    background: rgba(251, 191, 36, 0.2);
+    color: #fbbf24;
+}
+
+.status_cancelled {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .statsGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .enrollmentCard {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+
+    .progressSection {
+        width: 100%;
+    }
+}

@@ -1,0 +1,249 @@
+.authPage {
+    min-height: 100vh;
+    background: var(--color-bg-canvas);
+}
+
+.authContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 100vh;
+}
+
+/* Brand Side */
+.brandSide {
+    background: var(--color-bg-surface);
+    padding: var(--spacing-3xl);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: 1px solid var(--color-border);
+    position: relative;
+    overflow: hidden;
+}
+
+.brandSide::before {
+    content: "";
+    position: absolute;
+    top: -20%;
+    right: -20%;
+    width: 60%;
+    height: 60%;
+    background: radial-gradient(circle, rgba(184, 154, 90, 0.1) 0%, transparent 70%);
+    z-index: 0;
+}
+
+.logo {
+    display: inline-flex;
+    align-items: center;
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    text-decoration: none;
+    position: relative;
+    z-index: 1;
+}
+
+.logoText {
+    color: var(--color-text-primary);
+}
+
+.logoAccent {
+    color: var(--color-accent-gold);
+}
+
+.brandContent {
+    max-width: 460px;
+    position: relative;
+    z-index: 1;
+}
+
+.brandContent h1 {
+    font-size: 3.5rem;
+    line-height: 1.1;
+    font-weight: 800;
+    margin-bottom: var(--spacing-xl);
+    background: linear-gradient(135deg, #fff 0%, #aaa 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.brandContent p {
+    font-size: var(--font-size-xl);
+    color: var(--color-text-secondary);
+    line-height: var(--line-height-relaxed);
+    margin-bottom: var(--spacing-3xl);
+}
+
+/* Testimonial Slider */
+.testimonialsSlider {
+    padding-top: var(--spacing-3xl);
+    border-top: 1px solid var(--color-border);
+}
+
+.testimonialItem {
+    min-height: 120px;
+}
+
+.testimonialText {
+    font-size: var(--font-size-lg);
+    line-height: 1.6;
+    color: var(--color-text-primary);
+    font-style: italic;
+    margin-bottom: var(--spacing-lg);
+}
+
+.testimonialInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.testimonialInfo strong {
+    color: var(--color-accent-gold);
+}
+
+.testimonialInfo span {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+.sliderDots {
+    display: flex;
+    gap: var(--spacing-xs);
+    margin-top: var(--spacing-xl);
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-border);
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: all var(--transition-fast);
+}
+
+.dotActive {
+    width: 24px;
+    border-radius: 4px;
+    background: var(--color-accent-gold);
+}
+
+.brandFooter {
+    position: relative;
+    z-index: 1;
+}
+
+/* Form Side */
+.formSide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-3xl);
+}
+
+.formContainer {
+    width: 100%;
+    max-width: 400px;
+}
+
+.formHeader {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.formHeader h2 {
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--spacing-sm);
+}
+
+.formHeader p {
+    color: var(--color-text-secondary);
+    margin: 0;
+}
+
+.link {
+    color: var(--color-accent-gold);
+    text-decoration: none;
+    font-weight: var(--font-weight-medium);
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+.error {
+    padding: var(--spacing-md);
+    background: rgba(244, 67, 54, 0.1);
+    border: 1px solid var(--color-error);
+    border-radius: var(--radius-md);
+    color: var(--color-error);
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--spacing-lg);
+}
+
+.forgotPassword {
+    text-align: right;
+    margin-bottom: var(--spacing-lg);
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    margin: var(--spacing-xl) 0;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--color-border);
+}
+
+.divider span {
+    padding: 0 var(--spacing-md);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+}
+
+.socialBtn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .authContainer {
+        grid-template-columns: 1fr;
+    }
+
+    .brandSide {
+        display: none;
+    }
+
+    .formSide {
+        padding: var(--spacing-xl);
+    }
+
+    .formContainer {
+        max-width: 100%;
+    }
+
+    .formHeader::before {
+        content: "VietbaoPro";
+        display: block;
+        font-size: var(--font-size-xl);
+        font-weight: var(--font-weight-bold);
+        color: var(--color-accent-gold);
+        margin-bottom: var(--spacing-2xl);
+        text-align: center;
+    }
+}

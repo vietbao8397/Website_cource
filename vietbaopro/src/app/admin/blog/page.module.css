@@ -1,0 +1,191 @@
+.blogPage {
+    max-width: 1200px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--spacing-xl);
+}
+
+.header h1 {
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--spacing-xs);
+}
+
+.header p {
+    color: var(--color-text-muted);
+}
+
+.headerActions {
+    display: flex;
+    gap: var(--spacing-md);
+}
+
+.categoriesBtn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.categoriesBtn:hover {
+    border-color: var(--color-accent-gold);
+    color: var(--color-accent-gold);
+}
+
+.addBtn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--color-accent-gold);
+    border-radius: var(--radius-md);
+    color: var(--color-bg-canvas);
+    font-weight: var(--font-weight-semibold);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.addBtn:hover {
+    filter: brightness(1.1);
+}
+
+/* Table */
+.tableWrapper {
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px;
+}
+
+.table th,
+.table td {
+    padding: var(--spacing-md) var(--spacing-lg);
+    text-align: left;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.table th {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    background: var(--color-bg-canvas);
+}
+
+.table td {
+    font-size: var(--font-size-sm);
+}
+
+.table tbody tr:hover {
+    background: var(--color-bg-hover);
+}
+
+.postInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.postInfo strong {
+    color: var(--color-text-primary);
+}
+
+.slug {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    font-family: monospace;
+}
+
+.category {
+    font-size: var(--font-size-xs);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background: rgba(184, 154, 90, 0.2);
+    color: var(--color-accent-gold);
+    border-radius: var(--radius-full);
+}
+
+.statusBadge {
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    border-radius: var(--radius-full);
+}
+
+.status_published {
+    background: rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+}
+
+.status_draft {
+    background: rgba(107, 114, 128, 0.2);
+    color: #9ca3af;
+}
+
+.status_scheduled {
+    background: rgba(59, 130, 246, 0.2);
+    color: #3b82f6;
+}
+
+.date {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+}
+
+.actions {
+    display: flex;
+    gap: var(--spacing-xs);
+}
+
+.editBtn,
+.viewBtn {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: var(--font-size-xs);
+    background: var(--color-bg-canvas);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.editBtn:hover {
+    border-color: var(--color-accent-gold);
+    color: var(--color-accent-gold);
+}
+
+.viewBtn:hover {
+    border-color: #3b82f6;
+    color: #3b82f6;
+}
+
+.deleteBtn {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: var(--font-size-sm);
+    background: transparent;
+    border: 1px solid var(--color-error);
+    border-radius: var(--radius-md);
+    color: var(--color-error);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.deleteBtn:hover {
+    background: var(--color-error);
+    color: white;
+}
+
+.deleteBtn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

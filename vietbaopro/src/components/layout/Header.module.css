@@ -1,0 +1,289 @@
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: rgba(22, 21, 20, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.headerContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px;
+}
+
+/* Logo */
+.logo {
+    display: flex;
+    align-items: center;
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    text-decoration: none;
+}
+
+.logoText {
+    color: var(--color-text-primary);
+}
+
+.logoAccent {
+    color: var(--color-accent-gold);
+}
+
+/* Desktop Navigation */
+.nav {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xl);
+}
+
+.navLink {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+    position: relative;
+}
+
+.navLink:hover {
+    color: var(--color-text-primary);
+}
+
+.navLink::after {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--color-accent-gold);
+    transition: width var(--transition-fast);
+}
+
+.navLink:hover::after {
+    width: 100%;
+}
+
+/* Auth Buttons */
+.authButtons {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+/* User Menu */
+.loading {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+}
+
+.userMenu {
+    position: relative;
+}
+
+.userButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    background: var(--color-bg-surface);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.userButton:hover {
+    background: var(--color-bg-hover);
+}
+
+.userAvatar {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-accent-gold);
+}
+
+.dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 200px;
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all var(--transition-fast);
+    z-index: 1001;
+}
+
+.userMenu:hover .dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdownHeader {
+    padding: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.dropdownEmail {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    word-break: break-all;
+}
+
+.dropdownItem {
+    display: block;
+    width: 100%;
+    padding: var(--spacing-md);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-primary);
+    text-align: left;
+    text-decoration: none;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: background var(--transition-fast);
+}
+
+.dropdownItem:hover {
+    background: var(--color-bg-hover);
+    color: var(--color-accent-gold);
+}
+
+/* Mobile Menu Button */
+.menuButton {
+    display: none;
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    position: relative;
+}
+
+.menuIcon {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--color-text-primary);
+    position: relative;
+    transition: all var(--transition-fast);
+}
+
+.menuIcon::before,
+.menuIcon::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 24px;
+    height: 2px;
+    background: var(--color-text-primary);
+    transition: all var(--transition-fast);
+}
+
+.menuIcon::before {
+    top: -8px;
+}
+
+.menuIcon::after {
+    bottom: -8px;
+}
+
+.menuIcon.open {
+    background: transparent;
+}
+
+.menuIcon.open::before {
+    top: 0;
+    transform: rotate(45deg);
+}
+
+.menuIcon.open::after {
+    bottom: 0;
+    transform: rotate(-45deg);
+}
+
+/* Mobile Menu */
+.mobileMenu {
+    display: none;
+    position: fixed;
+    top: 72px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--color-bg-canvas);
+    padding: var(--spacing-xl);
+    transform: translateX(100%);
+    transition: transform var(--transition-normal);
+}
+
+.mobileMenuOpen {
+    transform: translateX(0);
+}
+
+.mobileNav {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.mobileNavLink {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-primary);
+    text-decoration: none;
+    padding: var(--spacing-md) 0;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.mobileAuthButtons {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-xl);
+}
+
+.mobileAuthButtons .btn {
+    width: 100%;
+    justify-content: center;
+}
+
+/* Mobile User Info */
+.mobileUserInfo {
+    padding: var(--spacing-md);
+    background: var(--color-bg-surface);
+    border-radius: var(--radius-md);
+    text-align: center;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+    word-break: break-all;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+
+    .nav,
+    .authButtons {
+        display: none;
+    }
+
+    .menuButton {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .mobileMenu {
+        display: block;
+    }
+}
