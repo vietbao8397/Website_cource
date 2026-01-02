@@ -1,7 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
-import { GoogleGenerativeAI } from "@google/generative-ai";
 import { KNOWLEDGE_BASE, SOPHIA_PERSONA } from "@/lib/chatbot-data";
+const { GoogleGenAI } = require("@google/genai");
 
 // Type for chat history
 interface Message {
@@ -147,27 +147,31 @@ export async function POST(request: NextRequest) {
         ${JSON.stringify(KNOWLEDGE_BASE, null, 2)}
         `;
 
-        // 3. Call Gemini
+        // 3. Call Gemini (New SDK)
         const apiKey = process.env.GOOGLE_AI_API_KEY;
         if (!apiKey) {
             return NextResponse.json({ error: "AI Key missing" }, { status: 500 });
         }
 
-        const genAI = new GoogleGenerativeAI(apiKey);
-        const model = genAI.getGenerativeModel({
-            model: "gemini-pro",
-            systemInstruction: systemPrompt
-        });
+        const genAI = new GoogleGenAI({ apiKey });
 
-        // Use contextHistory derived from DB (for students) or Client (for guests)
-        const chat = model.startChat({
-            history: contextHistory,
-            generationConfig: {
+        // Prepare contents for stateless call
+        // Ensure history message have correct structure: { role: 'user'|'model', parts: [{ text: ... }] }
+        // New SDK expects 'role' to be 'user' or 'model' (or 'assistant'?) -> 'model' is standard usually.
+
+        // Merge history + current message
+        const currentMessage = { role: 'user', parts: [{ text: message }] };
+        const fullContents = [...(contextHistory || []), currentMessage];
+
+        const result = await genAI.models.generateContent({
+            model: "gemini-1.5-flash",
+            config: {
+                systemInstruction: systemPrompt,
                 maxOutputTokens: 500,
             },
+            contents: fullContents
         });
 
-        const result = await chat.sendMessage(message);
         const responseText = result.response.text();
 
         // --- SAVE MODEL RESPONSE ONLY IF USER IS LOGGED IN (SAFE) ---

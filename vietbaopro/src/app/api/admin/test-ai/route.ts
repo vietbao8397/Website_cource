@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { GoogleGenerativeAI } from "@google/generative-ai";
+const { GoogleGenAI } = require("@google/genai"); // Use require for now or check import
 
 export const dynamic = 'force-dynamic';
 
@@ -14,15 +14,19 @@ export async function GET() {
             }, { status: 500 });
         }
 
-        const genAI = new GoogleGenerativeAI(apiKey);
-        const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+        const genAI = new GoogleGenAI({ apiKey });
 
-        const result = await model.generateContent("Hello! Are you working?");
+        // Use gemini-1.5-flash as it should work with new SDK
+        const result = await genAI.models.generateContent({
+            model: "gemini-1.5-flash",
+            contents: [{ role: "user", parts: [{ text: "Hello! Are you working?" }] }]
+        });
+
         const response = result.response.text();
 
         return NextResponse.json({
             status: "success",
-            message: "Google AI is working!",
+            message: "Google AI is working (New SDK)!",
             response: response,
             key_preview: apiKey.substring(0, 5) + "..."
         });
