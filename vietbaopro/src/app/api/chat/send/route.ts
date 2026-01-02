@@ -48,29 +48,37 @@ export async function POST(request: NextRequest) {
                 isStudent = true;
             }
 
-            // --- SAVE USER MESSAGE ---
-            await supabase.from("chat_history").insert({
-                user_id: user.id,
-                role: "user",
-                content: message,
-                created_at: new Date().toISOString()
-            });
+            // --- SAVE USER MESSAGE (SAFE) ---
+            try {
+                await supabase.from("chat_history").insert({
+                    user_id: user.id,
+                    role: "user",
+                    content: message,
+                    created_at: new Date().toISOString()
+                });
+            } catch (dbError) {
+                console.warn("Failed to save user message:", dbError);
+            }
 
-            // --- LOAD HISTORY FROM DB FOR CONTEXT ---
-            // Get last 20 messages for context window
-            const { data: recentMessages } = await supabase
-                .from("chat_history")
-                .select("role, content")
-                .eq("user_id", user.id)
-                .order("created_at", { ascending: false }) // Get latest first
-                .limit(20);
+            // --- LOAD HISTORY FROM DB FOR CONTEXT (SAFE) ---
+            try {
+                // Get last 20 messages for context window
+                const { data: recentMessages } = await supabase
+                    .from("chat_history")
+                    .select("role, content")
+                    .eq("user_id", user.id)
+                    .order("created_at", { ascending: false }) // Get latest first
+                    .limit(20);
 
-            if (recentMessages) {
-                // Reverse back to chronological order
-                dbHistory = recentMessages.reverse().map(msg => ({
-                    role: msg.role as "user" | "model",
-                    parts: [{ text: msg.content }]
-                }));
+                if (recentMessages) {
+                    // Reverse back to chronological order
+                    dbHistory = recentMessages.reverse().map(msg => ({
+                        role: msg.role as "user" | "model",
+                        parts: [{ text: msg.content }]
+                    }));
+                }
+            } catch (dbError) {
+                console.warn("Failed to load history:", dbError);
             }
         }
 
@@ -162,14 +170,18 @@ export async function POST(request: NextRequest) {
         const result = await chat.sendMessage(message);
         const responseText = result.response.text();
 
-        // --- SAVE MODEL RESPONSE ONLY IF USER IS LOGGED IN ---
+        // --- SAVE MODEL RESPONSE ONLY IF USER IS LOGGED IN (SAFE) ---
         if (user) {
-            await supabase.from("chat_history").insert({
-                user_id: user.id,
-                role: "model",
-                content: responseText,
-                created_at: new Date().toISOString()
-            });
+            try {
+                await supabase.from("chat_history").insert({
+                    user_id: user.id,
+                    role: "model",
+                    content: responseText,
+                    created_at: new Date().toISOString()
+                });
+            } catch (dbError) {
+                console.warn("Failed to save model response:", dbError);
+            }
         }
 
         return NextResponse.json({
