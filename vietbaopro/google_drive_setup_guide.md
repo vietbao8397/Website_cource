@@ -1,39 +1,22 @@
-# Hướng Dẫn Cấu Hình Google Drive Tự Động Lưu Ảnh
+# Hướng Dẫn Cấu Hình Biến Môi Trường (OAuth2)
 
-Để hệ thống AI có thể tự động upload ảnh đã tạo lên Google Drive, bạn cần tạo **Google Service Account**.
+Bạn đã cung cấp đầy đủ thông tin xác thực OAuth2. Vui lòng cập nhật các biến môi trường sau trên **Vercel** để hệ thống hoạt động:
 
-## Bước 1: Tạo Service Account
-1. Truy cập [Google Cloud Console](https://console.cloud.google.com/).
-2. Tạo một Project mới (hoặc chọn project hiện có).
-3. Vào **APIs & Services** > **Library** > Tìm "Google Drive API" > Nhấn **Enable**.
-4. Vào **IAM & Admin** > **Service Accounts**.
-5. Nhấn **Create Service Account**.
-   - Tên: `ai-image-uploader`
-   - Nhấn **Create and Continue**.
-6. Chọn Role: **Editor** (hoặc Basic > Editor) để có quyền ghi file.
-7. Nhấn **Done**.
+## 1. Google Cloud Credentials (OAuth2)
+Copy các giá trị này vào Vercel Environment Variables:
 
-## Bước 2: Tạo Key
-1. Click vào email của Service Account vừa tạo (vd: `ai-image-uploader@project-id.iam.gserviceaccount.com`).
-2. Tab **Keys** > **Add Key** > **Create new key**.
-3. Chọn **JSON** > **Create**.
-4. Một file JSON sẽ được tải về máy. Mở file này lên.
+- **GOOGLE_CLIENT_ID**: `(Giá trị bạn đã cung cấp)`
+- **GOOGLE_CLIENT_SECRET**: `(Giá trị bạn đã cung cấp)`
+- **GOOGLE_REFRESH_TOKEN**: `(Giá trị bạn đã cung cấp)`
 
-## Bước 3: Cấu hình Vercel
-Vào [Vercel Environment Variables](https://vercel.com/vietbao8397s-projects/website-cource/settings/environment-variables) và thêm 2 biến sau từ file JSON:
+## 2. Google AI (Gemini)
+- **GOOGLE_AI_API_KEY**: `(Giá trị bạn đã cung cấp)`
 
-1. **GOOGLE_CLIENT_EMAIL**
-   - Value: `client_email` trong file JSON (vd: `ai-image-uploader@...`)
+## 3. Google Drive Folder (Optional)
+Để lưu ảnh vào folder "Vietbaopro Media", bạn cần tìm **Folder ID** của thư mục đó và thêm biến:
+- **GOOGLE_DRIVE_FOLDER_ID**: `[ID_CUA_FOLDER_VIETBAOPRO_MEDIA]`
 
-2. **GOOGLE_PRIVATE_KEY**
-   - Value: `private_key` trong file JSON (bắt đầu bằng `-----BEGIN PRIVATE KEY-----...`)
-   - **Quan trọng:** Copy toàn bộ nội dung trong ngoặc kép.
-
-## Bước 4: Chia sẻ Folder (Tùy chọn)
-Nếu bạn muốn ảnh lưu vào một folder cụ thể thay vì root:
-1. Tạo folder trên Google Drive của bạn.
-2. Share folder đó cho email của Service Account (`client_email`).
-3. (Optional) Cấu hình thêm biến `GOOGLE_DRIVE_FOLDER_ID` trong code (hiện tại code đang lưu vào root của Service Account Drive).
+*(Cách lấy ID: Mở folder Vietbaopro Media trên trình duyệt, copy đoạn mã cuối cùng trên thanh địa chỉ)*
 
 ---
-**Lưu ý:** Sau khi cấu hình xong, nhớ Redeploy trên Vercel!
+**Sau khi cập nhật xong, hãy Redeploy project trên Vercel!**

@@ -7,20 +7,25 @@ const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY || "");
 
 // Initialize Drive API
 const getDriveService = () => {
-    const clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
-    const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n');
+    const clientId = process.env.GOOGLE_CLIENT_ID;
+    const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
+    const refreshToken = process.env.GOOGLE_REFRESH_TOKEN;
 
-    if (!clientEmail || !privateKey) {
-        throw new Error("Google Service Account credentials missing");
+    if (!clientId || !clientSecret || !refreshToken) {
+        throw new Error("Google OAuth2 credentials missing (CLIENT_ID, CLIENT_SECRET, REFRESH_TOKEN)");
     }
 
-    const auth = new google.auth.JWT({
-        email: clientEmail,
-        key: privateKey,
-        scopes: ['https://www.googleapis.com/auth/drive.file']
+    const oauth2Client = new google.auth.OAuth2(
+        clientId,
+        clientSecret,
+        process.env.NEXT_PUBLIC_SITE_URL // Redirect URL
+    );
+
+    oauth2Client.setCredentials({
+        refresh_token: refreshToken
     });
 
-    return google.drive({ version: 'v3', auth });
+    return google.drive({ version: 'v3', auth: oauth2Client });
 };
 
 // Upload to Drive
