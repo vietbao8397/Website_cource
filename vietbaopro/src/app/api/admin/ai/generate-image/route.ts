@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { enhancePrompt, uploadToDrive } from "@/lib/google-ai"; // Import our new helpers
 
 export async function POST(request: NextRequest) {
     try {
@@ -23,7 +24,7 @@ export async function POST(request: NextRequest) {
         }
 
         const body = await request.json();
-        const { prompt, style = "realistic" } = body;
+        const { prompt, style = "realistic" } = body; // style is now critical
 
         if (!prompt) {
             return NextResponse.json({ error: "Prompt is required" }, { status: 400 });
@@ -35,46 +36,36 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: "Google AI API key not configured" }, { status: 500 });
         }
 
-        // Style modifiers
-        const stylePrompts: Record<string, string> = {
-            realistic: "photorealistic, high quality, professional photography, 8k resolution",
-            artistic: "artistic, creative, vibrant colors, digital art style",
-            minimal: "minimalist, clean, simple, modern design",
-            illustration: "illustration style, vector art, clean lines",
-            "3d": "3D render, octane render, highly detailed, volumetric lighting",
-        };
+        // 1. ENHANCE PROMPT with Master Framework
+        // Map UI styles to our framework styles
+        const frameworkStyle = (style === "realistic" || style === "3d" || style === "artistic")
+            ? "realistic"
+            : "infographic";
 
-        const styleModifier = stylePrompts[style] || stylePrompts.realistic;
-        const enhancedPrompt = `${prompt}. Style: ${styleModifier}`;
+        console.log(`Enhancing prompt for style: ${frameworkStyle}...`);
+        const enhancedPrompt = await enhancePrompt(prompt, frameworkStyle);
+        console.log("Enhanced Prompt:", enhancedPrompt);
 
         // Initialize Google AI
         const genAI = new GoogleGenerativeAI(apiKey);
 
-        // Try using Imagen model through Gemini API
-        const model = genAI.getGenerativeModel({
-            model: "gemini-2.0-flash-exp",
-        });
+        // 2. GENERATE IMAGE
+        // Try using experimental image model
+        let modelName = "gemini-2.0-flash-exp";
+        // Note: In production you might swap this based on availability
 
-        // Generate content with image request
+        const model = genAI.getGenerativeModel({ model: modelName });
+
         const result = await model.generateContent({
             contents: [{
                 role: "user",
                 parts: [{
-                    text: `Generate an image based on this description: ${enhancedPrompt}. 
-                    
-                    Please create a detailed, high-quality image that matches this description.`
+                    text: `Generate an image based on this description: ${enhancedPrompt}`
                 }]
             }],
         });
 
         const response = result.response;
-        const text = response.text();
-
-        // For now, since direct image generation might need Imagen API,
-        // we'll return a text response with instructions
-        // In production, you'd integrate with Imagen or use the experimental image generation
-
-        // Check if there are any image parts in the response
         const candidates = response.candidates;
         let imageData = null;
 
@@ -91,7 +82,25 @@ export async function POST(request: NextRequest) {
         }
 
         if (imageData) {
-            // If we got image data, return it
+            // 3. UPLOAD TO DRIVE
+            let driveFile;
+            try {
+                // Generate filename using timestamp and prompt snippet
+                const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+                const safePrompt = prompt.substring(0, 30).replace(/[^a-zA-Z0-9]/g, '_');
+                const fileName = `AI_Gen_${timestamp}_${safePrompt}.png`; // Assuming PNG from Gemini
+
+                driveFile = await uploadToDrive(
+                    imageData.data,
+                    fileName,
+                    imageData.mimeType
+                );
+                console.log("Uploaded to Drive:", driveFile.id);
+            } catch (driveError) {
+                console.error("Failed to upload to Drive (continuing):", driveError);
+                // We won't fail the request if Drive upload fails, just log it
+            }
+
             return NextResponse.json({
                 success: true,
                 image: {
@@ -99,24 +108,28 @@ export async function POST(request: NextRequest) {
                     mimeType: imageData.mimeType,
                 },
                 prompt: enhancedPrompt,
+                originalPrompt: prompt,
+                driveFile: driveFile ? {
+                    id: driveFile.id,
+                    link: driveFile.webViewLink
+                } : null
             });
         }
 
-        // If no image was generated, return the text response
+        // If no image
         return NextResponse.json({
             success: true,
-            message: "Image generation model response",
-            text: text,
+            message: "No image generated (Text only response)",
+            text: response.text(),
             prompt: enhancedPrompt,
-            note: "Direct image generation requires Imagen API or experimental features. Please check Google AI Studio for full image generation capabilities.",
+            originalPrompt: prompt
         });
 
     } catch (error: unknown) {
         console.error("AI Image generation error:", error);
         const errorMessage = error instanceof Error ? error.message : "Failed to generate image";
         return NextResponse.json({
-            error: errorMessage,
-            details: "Please ensure your Google AI API key has access to image generation models."
+            error: errorMessage
         }, { status: 500 });
     }
 }

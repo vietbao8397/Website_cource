@@ -195,20 +195,48 @@
     border-bottom: 1px solid var(--color-border);
 }
 
-.resultPrompt {
+/* Result Info */
+.promptSection {
+    margin-bottom: var(--spacing-sm);
+}
+
+.promptLabel {
+    display: block;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    margin-bottom: 2px;
+}
+
+.promptText {
     font-size: var(--font-size-xs);
     color: var(--color-text-muted);
     line-height: 1.4;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    margin-bottom: var(--spacing-xs);
+    margin: 0;
 }
 
-.resultTime {
+.metaInfo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: var(--spacing-md);
+    padding-top: var(--spacing-sm);
+    border-top: 1px dashed var(--color-border);
+}
+
+.driveLink {
     font-size: var(--font-size-xs);
-    color: var(--color-text-muted);
+    color: #3b82f6;
+    text-decoration: none;
+    font-weight: var(--font-weight-semibold);
+}
+
+.driveLink:hover {
+    text-decoration: underline;
 }
 
 .resultActions {

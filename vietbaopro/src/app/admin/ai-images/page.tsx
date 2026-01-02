@@ -4,11 +4,16 @@ import { useState } from "react";
 import styles from "./page.module.css";
 
 const STYLES = [
-    { id: "realistic", label: "🎯 Realistic", desc: "Ảnh chân thực, chất lượng cao" },
-    { id: "artistic", label: "🎨 Artistic", desc: "Nghệ thuật, sáng tạo" },
-    { id: "minimal", label: "✨ Minimal", desc: "Tối giản, hiện đại" },
-    { id: "illustration", label: "🖼️ Illustration", desc: "Minh họa, vector" },
-    { id: "3d", label: "🔮 3D Render", desc: "Đồ họa 3D" },
+    {
+        id: "realistic",
+        label: "📸 Cinematic Realistic",
+        desc: "VIET BAO PRO Framework: Solid, Calm, Professional (8K)"
+    },
+    {
+        id: "infographic",
+        label: "📊 Brand Infographic",
+        desc: "Elevated Warm Precision: Dark mode, Clean, Data-driven"
+    },
 ];
 
 interface GeneratedImage {
@@ -16,6 +21,11 @@ interface GeneratedImage {
     mimeType?: string;
     text?: string;
     prompt: string;
+    originalPrompt?: string;
+    driveFile?: {
+        id: string;
+        link: string;
+    };
     createdAt: Date;
 }
 
@@ -50,7 +60,9 @@ export default function AIImagesPage() {
 
             const newImage: GeneratedImage = {
                 prompt: data.prompt || prompt,
+                originalPrompt: data.originalPrompt,
                 createdAt: new Date(),
+                driveFile: data.driveFile,
             };
 
             if (data.image) {
@@ -79,32 +91,28 @@ export default function AIImagesPage() {
         link.click();
     };
 
-    const handleDelete = (index: number) => {
-        setGeneratedImages((prev) => prev.filter((_, i) => i !== index));
-    };
-
     return (
         <div className={styles.container}>
             <header className={styles.header}>
-                <h1>🎨 AI Image Generator</h1>
-                <p>Tạo ảnh thumbnail và minh họa bằng Google AI</p>
+                <h1>🎨 AI Visual Creator (Pro)</h1>
+                <p>Tạo ảnh chuẩn Brand Guideline với Google Gemini & Drive</p>
             </header>
 
             {/* Generator Form */}
             <div className={styles.generatorCard}>
                 <div className={styles.formGroup}>
-                    <label>Mô tả ảnh bạn muốn tạo:</label>
+                    <label>Nội dung cần tạo (Ý tưởng thô):</label>
                     <textarea
                         value={prompt}
                         onChange={(e) => setPrompt(e.target.value)}
-                        placeholder="VD: A modern digital marketing workspace with laptop, coffee, and plants, professional photography, warm lighting..."
+                        placeholder="VD: Một người đàn ông đang làm việc tập trung trên bàn gỗ..."
                         rows={4}
                         disabled={isGenerating}
                     />
                 </div>
 
                 <div className={styles.styleSection}>
-                    <label>Chọn style:</label>
+                    <label>Chọn phong cách (Brand Guideline):</label>
                     <div className={styles.styleGrid}>
                         {STYLES.map((style) => (
                             <button
@@ -129,9 +137,9 @@ export default function AIImagesPage() {
                     disabled={isGenerating || !prompt.trim()}
                 >
                     {isGenerating ? (
-                        <>⏳ Đang tạo ảnh...</>
+                        <>⏳ Đang xử lý Prompt & Tạo ảnh...</>
                     ) : (
-                        <>🎨 Tạo ảnh</>
+                        <>🎨 Tạo ảnh & Lưu Drive</>
                     )}
                 </button>
             </div>
@@ -139,7 +147,7 @@ export default function AIImagesPage() {
             {/* Results */}
             {generatedImages.length > 0 && (
                 <div className={styles.resultsSection}>
-                    <h2>📷 Kết quả</h2>
+                    <h2>📷 Kết quả gần đây</h2>
                     <div className={styles.resultsGrid}>
                         {generatedImages.map((image, index) => (
                             <div key={index} className={styles.resultCard}>
@@ -154,12 +162,34 @@ export default function AIImagesPage() {
                                         <p>{image.text}</p>
                                     </div>
                                 )}
+
                                 <div className={styles.resultInfo}>
-                                    <p className={styles.resultPrompt}>{image.prompt}</p>
-                                    <span className={styles.resultTime}>
-                                        {image.createdAt.toLocaleTimeString("vi-VN")}
-                                    </span>
+                                    <div className={styles.promptSection}>
+                                        <span className={styles.promptLabel}>Original Idea:</span>
+                                        <p className={styles.promptText}>{image.originalPrompt || "N/A"}</p>
+                                    </div>
+                                    <div className={styles.promptSection}>
+                                        <span className={styles.promptLabel}>Enhanced Prompt (Used):</span>
+                                        <p className={styles.promptText}>{image.prompt}</p>
+                                    </div>
+
+                                    <div className={styles.metaInfo}>
+                                        <span className={styles.resultTime}>
+                                            {image.createdAt.toLocaleTimeString("vi-VN")}
+                                        </span>
+                                        {image.driveFile && (
+                                            <a
+                                                href={image.driveFile.link}
+                                                target="_blank"
+                                                rel="noreferrer"
+                                                className={styles.driveLink}
+                                            >
+                                                📂 Đã lưu Drive
+                                            </a>
+                                        )}
+                                    </div>
                                 </div>
+
                                 <div className={styles.resultActions}>
                                     {image.base64 && (
                                         <button
@@ -169,29 +199,12 @@ export default function AIImagesPage() {
                                             💾 Download
                                         </button>
                                     )}
-                                    <button
-                                        className={`${styles.actionBtn} ${styles.deleteBtn}`}
-                                        onClick={() => handleDelete(index)}
-                                    >
-                                        🗑️ Xóa
-                                    </button>
                                 </div>
                             </div>
                         ))}
                     </div>
                 </div>
             )}
-
-            {/* Info Box */}
-            <div className={styles.infoBox}>
-                <h3>💡 Mẹo tạo ảnh tốt:</h3>
-                <ul>
-                    <li>Mô tả chi tiết về đối tượng chính trong ảnh</li>
-                    <li>Thêm thông tin về ánh sáng, góc chụp</li>
-                    <li>Chỉ định màu sắc và không gian</li>
-                    <li>Sử dụng tiếng Anh để kết quả tốt hơn</li>
-                </ul>
-            </div>
         </div>
     );
 }
