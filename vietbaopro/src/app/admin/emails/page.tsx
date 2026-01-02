@@ -172,7 +172,7 @@ export default function EmailSequencesPage() {
                                                 <div
                                                     className={styles.stepPreview}
                                                     dangerouslySetInnerHTML={{
-                                                        __html: step.content.substring(0, 150) + "...",
+                                                        __html: (step.content || "").substring(0, 150) + "...",
                                                     }}
                                                 />
                                                 <button

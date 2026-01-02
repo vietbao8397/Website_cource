@@ -31,6 +31,7 @@ export async function GET() {
                     step_order,
                     delay_hours,
                     subject,
+                    content,
                     is_active
                 )
             `)
