@@ -3,19 +3,57 @@
 }
 
 .header {
-    margin-bottom: var(--spacing-2xl);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--spacing-xl);
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
 }
 
-.header h1 {
+.headerContent h1 {
     font-size: var(--font-size-2xl);
     margin-bottom: var(--spacing-xs);
 }
 
-.header p {
+.headerContent p {
     color: var(--color-text-muted);
 }
 
-/* Stats Grid */
+/* Sections */
+.section {
+    margin-bottom: var(--spacing-lg);
+}
+
+/* Quick Links */
+.quickLinks {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-xl);
+}
+
+.quickLink {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    color: var(--color-text-primary);
+    font-size: var(--font-size-sm);
+    transition: all var(--transition-fast);
+}
+
+.quickLink:hover {
+    border-color: var(--color-accent-gold);
+    background: var(--color-bg-hover);
+}
+
+/* Stats Grid - keeping for backwards compatibility */
 .statsGrid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
