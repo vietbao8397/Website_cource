@@ -10,15 +10,18 @@ CREATE TABLE IF NOT EXISTS chat_history (
 -- Enable RLS
 ALTER TABLE chat_history ENABLE ROW LEVEL SECURITY;
 
--- Policies
+-- Policies (Drop if exists to avoid errors on re-run)
+DROP POLICY IF EXISTS "Users can view their own chat history" ON chat_history;
 CREATE POLICY "Users can view their own chat history" 
 ON chat_history FOR SELECT 
 USING (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Users can insert their own chat messages" ON chat_history;
 CREATE POLICY "Users can insert their own chat messages" 
 ON chat_history FOR INSERT 
 WITH CHECK (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Admins can view all chat history" ON chat_history;
 CREATE POLICY "Admins can view all chat history" 
 ON chat_history FOR SELECT 
 USING (
