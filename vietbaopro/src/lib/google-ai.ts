@@ -7,10 +7,7 @@ const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY || "");
 export function getImageModel() {
     // Using Gemini 2.0 Flash for image generation
     return genAI.getGenerativeModel({
-        model: "gemini-2.0-flash-exp-image-generation",
-        generationConfig: {
-            responseModalities: ["Text", "Image"],
-        },
+        model: "gemini-2.0-flash-exp",
     });
 }
 
