@@ -152,7 +152,7 @@ export default function EmailSequencesPage() {
                             </div>
 
                             <div className={styles.stepsTimeline}>
-                                {sequence.email_sequence_steps
+                                {(sequence.email_sequence_steps || [])
                                     .sort((a, b) => a.step_order - b.step_order)
                                     .map((step, index) => (
                                         <div key={step.id} className={styles.stepCard}>
