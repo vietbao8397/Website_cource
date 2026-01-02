@@ -27,16 +27,30 @@ export default function ChatWidget() {
         scrollToBottom();
     }, [messages, isOpen]);
 
-    // Initial welcome message
+    // Load history on mount
     useEffect(() => {
-        if (messages.length === 0) {
-            setMessages([
-                {
-                    role: "model",
-                    parts: [{ text: "Dạ Sophia chào anh/chị ạ! Em có thể giúp gì cho việc học của mình hôm nay hông nè? ^^" }]
+        const loadHistory = async () => {
+            try {
+                const res = await fetch("/api/chat/history");
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.messages && data.messages.length > 0) {
+                        setMessages(data.messages);
+                    } else {
+                        // Show welcome if no history
+                        setMessages([
+                            {
+                                role: "model",
+                                parts: [{ text: "Dạ Sophia chào anh/chị ạ! Em có thể giúp gì cho việc học của mình hôm nay hông nè? ^^" }]
+                            }
+                        ]);
+                    }
                 }
-            ]);
-        }
+            } catch (error) {
+                console.error("Failed to load history", error);
+            }
+        };
+        loadHistory();
     }, []);
 
     const handleSend = async () => {
