@@ -30,13 +30,13 @@ const getDriveService = () => {
 };
 
 // Upload to Drive
-export async function uploadToDrive(base64Data: string, fileName: string, mimeType: string) {
+export async function uploadToDrive(base64Data: string | Buffer, fileName: string, mimeType: string) {
     try {
         const drive = getDriveService();
         // Handle both base64 string and Buffer
         const buffer = Buffer.isBuffer(base64Data)
             ? base64Data
-            : Buffer.from(base64Data, 'base64');
+            : Buffer.from(base64Data as string, 'base64');
 
         const stream = new Readable();
         stream.push(buffer);
