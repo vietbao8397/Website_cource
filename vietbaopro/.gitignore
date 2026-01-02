@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# CCPM (Claude Code PM)
+.claude/epics/
+.claude/context/
+.claude/settings.local.json
