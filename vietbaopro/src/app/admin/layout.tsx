@@ -66,6 +66,9 @@ export default async function AdminLayout({
           <Link href="/admin/emails" className={styles.navItem}>
             <Icons.Mail size={18} className={styles.navIcon} /> Email Marketing
           </Link>
+          <Link href="/admin/ai-images" className={styles.navItem}>
+            <Icons.Sparkles size={18} className={styles.navIcon} /> AI Images
+          </Link>
         </nav>
         <div className={styles.sidebarFooter}>
           <Link href="/" className={styles.navItem}>
