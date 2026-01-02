@@ -31,6 +31,8 @@ export const metadata: Metadata = {
   },
 };
 
+import ChatWidget from "@/components/chat/ChatWidget";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -41,6 +43,7 @@ export default function RootLayout({
       <body>
         <Icons.Gradient />
         {children}
+        <ChatWidget />
       </body>
     </html>
   );

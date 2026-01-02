@@ -378,4 +378,38 @@ export const Icons = {
             <polyline points="9 22 9 12 15 12 15 22" />
         </svg>
     ),
+
+    X: ({ size = 20, variant = 'currentColor', ...props }: IconProps) => (
+        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={variant === 'gold' ? 'url(#gold-gradient-icon)' : variant} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+            <path d="M18 6 6 18" />
+            <path d="m6 6 12 12" />
+        </svg>
+    ),
+
+    MessageCircle: ({ size = 20, variant = 'currentColor', ...props }: IconProps) => (
+        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={variant === 'gold' ? 'url(#gold-gradient-icon)' : variant} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+            <path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z" />
+        </svg>
+    ),
+
+    Minimize2: ({ size = 20, variant = 'currentColor', ...props }: IconProps) => (
+        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={variant === 'gold' ? 'url(#gold-gradient-icon)' : variant} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+            <polyline points="4 14 10 14 10 20" />
+            <polyline points="20 10 14 10 14 4" />
+        </svg>
+    ),
+
+    Send: ({ size = 20, variant = 'currentColor', ...props }: IconProps) => (
+        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={variant === 'gold' ? 'url(#gold-gradient-icon)' : variant} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+            <path d="m22 2-7 20-4-9-9-4Z" />
+            <path d="M22 2 11 13" />
+        </svg>
+    ),
+
+    User: ({ size = 20, variant = 'currentColor', ...props }: IconProps) => (
+        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={variant === 'gold' ? 'url(#gold-gradient-icon)' : variant} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+        </svg>
+    ),
 };
