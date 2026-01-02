@@ -1,9 +1,10 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+const { GoogleGenAI } = require("@google/genai");
 import { google } from "googleapis";
 import { Readable } from "stream";
 
 // Initialize Google AI
-const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY || "");
+const apiKey = process.env.GOOGLE_AI_API_KEY || "";
+const genAI = new GoogleGenAI({ apiKey });
 
 // Initialize Drive API
 const getDriveService = () => {
@@ -32,7 +33,11 @@ const getDriveService = () => {
 export async function uploadToDrive(base64Data: string, fileName: string, mimeType: string) {
     try {
         const drive = getDriveService();
-        const buffer = Buffer.from(base64Data, 'base64');
+        // Handle both base64 string and Buffer
+        const buffer = Buffer.isBuffer(base64Data)
+            ? base64Data
+            : Buffer.from(base64Data, 'base64');
+
         const stream = new Readable();
         stream.push(buffer);
         stream.push(null);
@@ -66,18 +71,7 @@ export async function uploadToDrive(base64Data: string, fileName: string, mimeTy
     }
 }
 
-// Get models
-export function getImageModel() {
-    return genAI.getGenerativeModel({
-        model: "gemini-2.0-flash-exp",
-    });
-}
-
-export function getTextModel() {
-    return genAI.getGenerativeModel({ model: "gemini-2.0-flash-exp" });
-}
-
-// VIET BAO PRO Frameworks
+// VIET BAO PRO Frameworks (Kept for reference or future use)
 const REALISTIC_FRAMEWORK = `
 # VIET BAO PRO: MASTER VISUAL PROMPT FRAMEWORK
 Goal: Consistent, high-quality, "Tangible Knowledge", No Sci-fi/Hype.
@@ -107,36 +101,33 @@ KEY ELEMENTS:
 5. Mood: Professional, data-driven, trustworthy.
 `;
 
-// Enhance prompt based on style
+// Helper to enhance prompt using New SDK (if used anywhere)
 export async function enhancePrompt(prompt: string, style: 'realistic' | 'infographic'): Promise<string> {
     try {
-        const model = getTextModel();
-        let systemInstruction = "";
+        const systemPrompt = style === 'realistic'
+            ? "You are an expert prompt engineer using the VIET BAO PRO Framework. Convert the input into a detailed, high-quality realistic image prompt."
+            : "You are an expert prompt engineer using the VIET BAO PRO Brand Guideline. Convert the input into a detailed infographic prompt.";
 
-        if (style === 'realistic') {
-            systemInstruction = `You are an expert prompt engineer using the VIET BAO PRO Framework.
-            ${REALISTIC_FRAMEWORK}
-            
-            TASK: Convert the user's input into a FULL detailed prompt following the Master Formula 5-Layers.
-            - Input: "${prompt}"
-            - Output: A single paragraph efficient prompt.
-            - STRICTLY follow the Lighting & Color rules (Soft Graphite & Warm Gold, No Blue/Neon).`;
-        } else { // infographic
-            systemInstruction = `You are an expert design prompter using the VIET BAO PRO Brand Guideline.
-            ${INFOGRAPHIC_FRAMEWORK}
-            
-            TASK: Convert the user's input into a prompt for a high-quality infographic/diagram.
-            - Input: "${prompt}"
-            - Output: A single paragraph detailed prompt.
-            - Focus on: Dark mode, clean layout, Gold accents, legible composition.`;
-        }
+        const result = await genAI.models.generateContent({
+            model: "gemini-1.5-flash",
+            config: { systemInstruction: systemPrompt },
+            contents: [{ role: 'user', parts: [{ text: prompt }] }]
+        });
 
-        const result = await model.generateContent(systemInstruction);
         return result.response.text().trim();
     } catch (error) {
         console.error("Error enhancing prompt:", error);
-        return `${prompt}. Style: ${style === 'realistic' ? 'Cinematic, warm gold lighting, dark background' : 'Dark mode infographic, gold accents'}`;
+        return prompt;
     }
+}
+
+export function getImageModel() {
+    // Placeholder or implement if needed using genAI.models
+    return genAI.models;
+}
+
+export function getTextModel() {
+    return genAI.models;
 }
 
 export { genAI };
