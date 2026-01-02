@@ -140,6 +140,7 @@ async function queueSequenceEmails(
                 id,
                 step_order,
                 delay_hours,
+                delay_minutes,
                 subject,
                 content,
                 is_active
@@ -166,7 +167,8 @@ async function queueSequenceEmails(
         const steps = sequence.email_sequence_steps?.filter((s: any) => s.is_active) || [];
 
         for (const step of steps) {
-            const scheduledAt = new Date(now.getTime() + step.delay_hours * 60 * 60 * 1000);
+            const delayInMs = (step.delay_hours || 0) * 60 * 60 * 1000 + (step.delay_minutes || 0) * 60 * 1000;
+            const scheduledAt = new Date(now.getTime() + delayInMs);
 
             // Check if this email is already queued
             const { data: existing } = await supabase

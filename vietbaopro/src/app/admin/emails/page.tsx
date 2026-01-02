@@ -8,6 +8,7 @@ interface EmailStep {
     id: string;
     step_order: number;
     delay_hours: number;
+    delay_minutes: number;
     send_at_time: string | null;
     subject: string;
     content: string;
@@ -37,6 +38,7 @@ export default function EmailSequencesPage() {
         subject: "",
         content: "",
         delay_days: 0,
+        delay_minutes: 0,
         send_at_time: "09:00"
     });
     const [isSaving, setIsSaving] = useState(false);
@@ -67,6 +69,7 @@ export default function EmailSequencesPage() {
             subject: step.subject || "",
             content: step.content || "",
             delay_days: delayDays,
+            delay_minutes: step.delay_minutes || 0,
             send_at_time: step.send_at_time || "09:00",
         });
     };
@@ -86,6 +89,7 @@ export default function EmailSequencesPage() {
                     subject: editForm.subject,
                     content: editForm.content,
                     delay_hours,
+                    delay_minutes: editForm.delay_minutes,
                     send_at_time: editForm.send_at_time,
                 }),
             });
@@ -114,13 +118,26 @@ export default function EmailSequencesPage() {
         }
     };
 
-    const formatDelayHours = (hours: number) => {
-        if (hours === 0) return "Gửi ngay";
-        if (hours < 24) return `Sau ${hours} giờ`;
-        const days = Math.floor(hours / 24);
-        const remainingHours = hours % 24;
-        if (remainingHours === 0) return `Sau ${days} ngày`;
-        return `Sau ${days} ngày ${remainingHours} giờ`;
+    const formatDelay = (hours: number, minutes: number) => {
+        if (hours === 0 && minutes === 0) return "Gửi ngay";
+
+        const parts = [];
+        if (hours > 0) {
+            if (hours < 24) {
+                parts.push(`${hours} giờ`);
+            } else {
+                const days = Math.floor(hours / 24);
+                const remainingHours = hours % 24;
+                parts.push(`${days} ngày`);
+                if (remainingHours > 0) parts.push(`${remainingHours} giờ`);
+            }
+        }
+
+        if (minutes > 0) {
+            parts.push(`${minutes} phút`);
+        }
+
+        return "Sau " + parts.join(" ");
     };
 
     if (isLoading) {
@@ -179,7 +196,7 @@ export default function EmailSequencesPage() {
                                             <div className={styles.stepContent}>
                                                 <div className={styles.stepMeta}>
                                                     <span className={styles.stepDelay}>
-                                                        ⏰ {formatDelayHours(step.delay_hours)}
+                                                        ⏰ {formatDelay(step.delay_hours, step.delay_minutes)}
                                                     </span>
                                                     <span className={step.is_active ? styles.stepActive : styles.stepInactive}>
                                                         {step.is_active ? "Bật" : "Tắt"}
@@ -235,7 +252,17 @@ export default function EmailSequencesPage() {
                                                 setEditForm((prev) => ({ ...prev, delay_days: parseInt(e.target.value) || 0 }))
                                             }
                                         />
-                                        <p className={styles.hint}>0 = Gửi ngay lập tức</p>
+                                    </div>
+                                    <div className={styles.formGroup}>
+                                        <label>Hoặc bao nhiêu phút?</label>
+                                        <input
+                                            type="number"
+                                            min="0"
+                                            value={editForm.delay_minutes}
+                                            onChange={(e) =>
+                                                setEditForm((prev) => ({ ...prev, delay_minutes: parseInt(e.target.value) || 0 }))
+                                            }
+                                        />
                                     </div>
                                     <div className={styles.formGroup}>
                                         <label>Gửi lúc mấy giờ?</label>
@@ -246,9 +273,12 @@ export default function EmailSequencesPage() {
                                                 setEditForm((prev) => ({ ...prev, send_at_time: e.target.value }))
                                             }
                                         />
-                                        <p className={styles.hint}>VD: 13:00 = 1 giờ chiều</p>
                                     </div>
                                 </div>
+                                <p className={styles.hint}>
+                                    Nếu đặt Ngày {'>'} 0, email sẽ đợi đến số ngày đó rồi gửi vào giờ đã chọn.
+                                    Nếu đặt Phút {'>'} 0, email sẽ gửi sau số phút đó kể từ khi kích hoạt.
+                                </p>
                             </div>
 
                             <div className={styles.formGroup}>
