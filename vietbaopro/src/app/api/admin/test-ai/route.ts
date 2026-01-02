@@ -15,7 +15,7 @@ export async function GET() {
         }
 
         const genAI = new GoogleGenerativeAI(apiKey);
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
         const result = await model.generateContent("Hello! Are you working?");
         const response = result.response.text();

@@ -46,7 +46,13 @@ export async function POST(request: NextRequest) {
         const enhancedPrompt = await enhancePrompt(prompt, frameworkStyle);
         console.log("Enhanced Prompt:", enhancedPrompt);
 
-        // Initialize Google AI
+        // Helper to get a text model
+        const getTextModel = (apiKey: string) => {
+            const genAI = new GoogleGenerativeAI(apiKey);
+            return genAI.getGenerativeModel({ model: "gemini-pro" });
+        };
+
+        // Initialize Google AI for image generation
         const genAI = new GoogleGenerativeAI(apiKey);
 
         // 2. GENERATE IMAGE
