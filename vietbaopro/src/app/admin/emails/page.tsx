@@ -8,6 +8,7 @@ interface EmailStep {
     id: string;
     step_order: number;
     delay_hours: number;
+    send_at_time: string | null;
     subject: string;
     content: string;
     is_active: boolean;
@@ -32,7 +33,12 @@ export default function EmailSequencesPage() {
     const [sequences, setSequences] = useState<EmailSequence[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [editingStep, setEditingStep] = useState<EmailStep | null>(null);
-    const [editForm, setEditForm] = useState({ subject: "", content: "" });
+    const [editForm, setEditForm] = useState({
+        subject: "",
+        content: "",
+        delay_days: 0,
+        send_at_time: "09:00"
+    });
     const [isSaving, setIsSaving] = useState(false);
 
     useEffect(() => {
@@ -56,9 +62,12 @@ export default function EmailSequencesPage() {
 
     const handleEditClick = (step: EmailStep) => {
         setEditingStep(step);
+        const delayDays = Math.floor((step.delay_hours || 0) / 24);
         setEditForm({
-            subject: step.subject,
-            content: step.content,
+            subject: step.subject || "",
+            content: step.content || "",
+            delay_days: delayDays,
+            send_at_time: step.send_at_time || "09:00",
         });
     };
 
@@ -67,10 +76,18 @@ export default function EmailSequencesPage() {
         setIsSaving(true);
 
         try {
+            // Convert days to hours
+            const delay_hours = editForm.delay_days * 24;
+
             const res = await fetch(`/api/admin/sequences/steps/${editingStep.id}`, {
                 method: "PATCH",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(editForm),
+                body: JSON.stringify({
+                    subject: editForm.subject,
+                    content: editForm.content,
+                    delay_hours,
+                    send_at_time: editForm.send_at_time,
+                }),
             });
 
             if (res.ok) {
@@ -204,6 +221,36 @@ export default function EmailSequencesPage() {
                             </button>
                         </div>
                         <div className={styles.modalBody}>
+                            {/* Timing Settings */}
+                            <div className={styles.timingSection}>
+                                <h3>⏰ Thời gian gửi</h3>
+                                <div className={styles.timingGrid}>
+                                    <div className={styles.formGroup}>
+                                        <label>Sau bao nhiêu ngày?</label>
+                                        <input
+                                            type="number"
+                                            min="0"
+                                            value={editForm.delay_days}
+                                            onChange={(e) =>
+                                                setEditForm((prev) => ({ ...prev, delay_days: parseInt(e.target.value) || 0 }))
+                                            }
+                                        />
+                                        <p className={styles.hint}>0 = Gửi ngay lập tức</p>
+                                    </div>
+                                    <div className={styles.formGroup}>
+                                        <label>Gửi lúc mấy giờ?</label>
+                                        <input
+                                            type="time"
+                                            value={editForm.send_at_time}
+                                            onChange={(e) =>
+                                                setEditForm((prev) => ({ ...prev, send_at_time: e.target.value }))
+                                            }
+                                        />
+                                        <p className={styles.hint}>VD: 13:00 = 1 giờ chiều</p>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div className={styles.formGroup}>
                                 <label>Tiêu đề (Subject)</label>
                                 <input
